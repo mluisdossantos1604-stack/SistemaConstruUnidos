@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7º Encontro de Negócios - Constru Unidos</title>
+    <!-- Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            orange: '#f26522',
+                            orangeDark: '#d5521b',
+                            darkHeader: '#111111',
+                            secondaryDark: '#1a1a1a',
+                            slateDark: '#121212',
+                            cardDark: '#1e1e1e',
+                            cardBorder: '#2d2d2d',
+                            cardLight: '#FFFFFF',
+                            lightBg: '#f8f9fa'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #f26522;
+            --primary-dark: #d5521b;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; }
+        
+        /* Tema Escuro */
+        .dark body { background-color: #121212; color: #FFFFFF; }
+        .dark .bg-brand-dark { background: linear-gradient(135deg, #111111 0%, #1c1c1c 100%) !important; }
+        .dark .bg-brand-card { background-color: #1e1e1e !important; border-color: #2d2d2d !important; }
+        .dark .text-white-theme { color: #FFFFFF !important; }
+        .dark .text-subtext { color: #d1d5db !important; }
+        .dark input, .dark select { background-color: #121212 !important; color: #FFFFFF !important; border-color: #374151 !important; }
+
+        /* Tema Claro */
+        body:not(.dark) { background-color: #f3f4f6; color: #111827; }
+        body:not(.dark) .bg-brand-dark { background: #ffffff !important; border-color: #e5e7eb !important; }
+        body:not(.dark) .bg-brand-card { background-color: #ffffff !important; border-color: #e5e7eb !important; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        body:not(.dark) .text-white-theme { color: #111827 !important; }
+        body:not(.dark) .text-subtext { color: #374151 !important; }
+        body:not(.dark) .border-slate-800, body:not(.dark) .border-slate-700 { border-color: #d1d5db !important; }
+        body:not(.dark) .bg-slate-900 { background-color: #f9fafb !important; border-color: #d1d5db !important; color: #111827 !important; }
+        body:not(.dark) .bg-slate-800 { background-color: #f3f4f6 !important; color: #111827 !important; }
+        body:not(.dark) select, body:not(.dark) input { background-color: #ffffff !important; color: #111827 !important; border-color: #d1d5db !important; }
+
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .dark .custom-scroll::-webkit-scrollbar-track { background: #121212; }
+        .dark .custom-scroll::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+        body:not(.dark) .custom-scroll::-webkit-scrollbar-track { background: #f1f3f5; }
+        body:not(.dark) .custom-scroll::-webkit-scrollbar-thumb { background: #cccccc; border-radius: 4px; }
+
+        .glow-orange { box-shadow: 0 0 15px rgba(242, 101, 34, 0.25); }
+        .text-dark-rejection { color: #0f172a !important; font-weight: 700 !important; }
+
+        /* Estilos de Contraste para Cards */
+        .dark .contact-card { background-color: #1e1e1e !important; color: #f8fafc !important; border-color: #334155 !important; }
+        body:not(.dark) .contact-card { background-color: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+        .dark .contact-subtext { color: #94a3b8 !important; }
+        body:not(.dark) .contact-subtext { color: #475569 !important; }
+
+        .portal-lojista-title { color: #f26522 !important; font-weight: 700; }
+
+        .nav-container-spread {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-btn-spread {
+            flex: 1 1 auto;
+            text-align: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .portal-lojista-panel-title,
+        .portal-lojista-panel-title * { color: #f26522 !important; }
+        .portal-lojista-light-text { color: #374151 !important; }
+        .dark .portal-lojista-light-text { color: #f8fafc !important; }
+        .portal-table-muted { color: #334155 !important; }
+        .dark .portal-table-muted { color: #e2e8f0 !important; }
+        .portal-dark-surface { background-color: #f9fafb !important; border-color: #d1d5db !important; }
+        .dark .portal-dark-surface { background-color: #111827 !important; border-color: #374151 !important; }
+        .catalog-company-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; background: #ffffff; border: 1px solid #cbd5e1; padding: 4px; }
+        .catalog-company-logo-placeholder { width: 44px; height: 44px; border-radius: 10px; display:flex; align-items:center; justify-content:center; background: rgba(148,163,184,.12); border:1px solid #475569; }
+        .file-meta { word-break: break-word; }
+        .btn-icon-danger { color:#f87171; }
+        .btn-icon-danger:hover { color:#fecaca; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scroll">
+
+    <!-- TOP HEADER / NAV REDIMENSIONADO E DISTRIBUÍDO -->
+    <header class="bg-brand-dark border-b-4 border-[#f26522] px-4 py-2.5 flex flex-col lg:flex-row justify-between items-center sticky top-0 z-50 shadow-lg gap-3">
+        <div class="flex items-center space-x-3 w-full lg:w-auto shrink-0">
+            <div class="flex items-center gap-2">
+                <img id="img-event-logo" src="logo_construnidos_3.png" alt="Rede Constru Unidos" class="h-14 w-auto max-h-16 object-contain bg-white/10 p-1 rounded-lg border border-white/20 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x60?text=Constru+Unidos';">
+            </div>
+            <div class="border-l-2 border-[#f26522] pl-3">
+                <h1 id="lbl-header-evento" class="text-sm font-black text-white-theme uppercase tracking-wider leading-tight">7º Encontro de Negócios</h1>
+                <p id="lbl-header-local" class="text-[11px] font-medium text-subtext leading-tight mt-0.5">Garanhuns/PE — AGA Associação Garanhuense de Atletismo</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-2 w-full lg:w-auto flex-1 justify-between gap-1 overflow-x-auto custom-scroll py-1">
+            <nav class="nav-container-spread w-full">
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="nav-btn nav-btn-spread bg-[#f26522] text-white px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-chart-line"></i> Painel Geral
+                </button>
+                <!-- ITEM 5: Botão Registrar Atendimento sempre em verde -->
+                <button onclick="switchTab('voucher')" id="tab-voucher" class="nav-btn nav-btn-spread bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm">
+                    <i class="fa-solid fa-ticket"></i> Registrar Atendimento
+                </button>
+                <!-- ITEM 5: Botão Passaporte sempre em verde -->
+                <button onclick="switchTab('passport')" id="tab-passport" class="nav-btn nav-btn-spread bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm">
+                    <i class="fa-solid fa-passport"></i> Passaporte
+                </button>
+                <button onclick="switchTab('vouchers-list')" id="tab-vouchers-list" class="nav-btn nav-btn-spread bg-slate-800 text-subtext px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-list-check"></i> Vouchers Gerados
+                </button>
+                <button onclick="switchTab('sorteio')" id="tab-sorteio" class="nav-btn nav-btn-spread bg-slate-800 text-subtext px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-trophy"></i> Sorteio
+                </button>
+                <button onclick="switchTab('lojista')" id="tab-lojista" class="nav-btn nav-btn-spread bg-slate-800 text-subtext px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-user-lock"></i> Portal Lojista
+                </button>
+                <button onclick="switchTab('planilha')" id="tab-planilha" class="nav-btn nav-btn-spread bg-slate-800 text-subtext px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-table"></i> Planilha
+                </button>
+                <button onclick="switchTab('admin')" id="tab-admin" class="nav-btn nav-btn-spread bg-slate-800 text-subtext px-2.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-user-shield"></i> Painel ADM
+                </button>
+            </nav>
+
+            <button onclick="toggleTheme()" class="bg-slate-800 hover:bg-slate-700 text-amber-500 p-2 rounded-lg text-xs transition border border-slate-700 shrink-0" title="Alternar Modo Claro/Escuro">
+                <i id="theme-icon" class="fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- NOTIFICAÇÃO POPUP -->
+    <div id="toast-notification" class="hidden fixed bottom-5 right-5 z-50 bg-emerald-600 text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-4 transition-all duration-300 border border-emerald-400">
+        <i class="fa-solid fa-circle-check text-2xl"></i>
+        <div>
+            <h4 class="font-bold text-sm" id="toast-title">Notificação</h4>
+            <p class="text-xs" id="toast-msg">Operação realizada com sucesso.</p>
+        </div>
+        <button onclick="document.getElementById('toast-notification').classList.add('hidden')" class="ml-auto text-white hover:text-slate-200">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 p-4 lg:p-6 max-w-[1600px] w-full mx-auto">
+
+        <!-- TAB 1: DASHBOARD -->
+        <div id="view-dashboard" class="tab-content space-y-6">
+            <div id="exportable-dashboard" class="bg-brand-dark p-6 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
+                <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-4 gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-8 bg-[#f26522] rounded-full"></div>
+                        <div>
+                            <h2 class="text-2xl font-black text-white-theme uppercase tracking-wider">Painel de Indicadores — Rodada de Negócios</h2>
+                            <p class="text-xs text-subtext">Acompanhamento em tempo real das negociações, metas e volume por expositor e rede</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-700 px-4 py-2 rounded-xl text-right">
+                        <span class="text-xs text-subtext block uppercase font-bold">Total Negociado no Evento</span>
+                        <span id="kpi-total-geral" class="text-2xl font-black text-emerald-500">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <!-- TOP METRICS GRID -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                        <div class="text-subtext text-xs font-semibold uppercase flex justify-between">
+                            <span>Vol. Vendas Indústrias</span>
+                            <i class="fa-solid fa-industry text-[#f26522]"></i>
+                        </div>
+                        <div id="kpi-vol-industrias" class="text-xl font-bold text-white-theme mt-2">R$ 0,00</div>
+                        <div class="text-[10px] text-emerald-500 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> 100% Auditado</div>
+                    </div>
+
+                    <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                        <div class="text-subtext text-xs font-semibold uppercase flex justify-between">
+                            <span>Média de Negócios / Loja</span>
+                            <i class="fa-solid fa-store text-blue-500"></i>
+                        </div>
+                        <div id="kpi-media-loja" class="text-xl font-bold text-white-theme mt-2">R$ 0,00</div>
+                        <div class="text-[10px] text-subtext mt-1">Base: Lojas Cadastradas</div>
+                    </div>
+
+                    <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                        <div class="text-subtext text-xs font-semibold uppercase flex justify-between">
+                            <span>Total de Reuniões</span>
+                            <i class="fa-solid fa-comments text-purple-500"></i>
+                        </div>
+                        <div id="kpi-total-reunioes" class="text-xl font-bold text-white-theme mt-2">0</div>
+                        <div class="text-[10px] text-subtext mt-1">Atendimentos Registrados</div>
+                    </div>
+
+                    <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                        <div class="text-subtext text-xs font-semibold uppercase flex justify-between">
+                            <span>Reuniões c/ Pedidos</span>
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        </div>
+                        <div id="kpi-reunioes-convertidas" class="text-xl font-bold text-emerald-500 mt-2">0</div>
+                        <div class="text-[10px] text-emerald-500 mt-1">Vouchers Validados</div>
+                    </div>
+
+                    <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                        <div class="text-subtext text-xs font-semibold uppercase flex justify-between">
+                            <span>Taxa de Conversão</span>
+                            <i class="fa-solid fa-percent text-amber-500"></i>
+                        </div>
+                        <div id="kpi-taxa-conversao" class="text-xl font-bold text-amber-500 mt-2">0,00%</div>
+                        <div class="text-[10px] text-amber-500 mt-1">Conversão da Rede</div>
+                    </div>
+                </div>
+
+                <!-- MAIN LAYOUT -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-3 bg-brand-card p-4 rounded-xl border border-slate-800 flex flex-col">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-clock"></i> Status da Rodada
+                            </h3>
+                            <button onclick="switchTab('admin')" class="text-[10px] bg-slate-800 hover:bg-[#f26522] hover:text-white text-subtext px-2 py-0.5 rounded font-bold transition">
+                                <i class="fa-solid fa-lock text-[9px] mr-1"></i> Editar ADM
+                            </button>
+                        </div>
+                        <div class="overflow-y-auto max-h-[500px] custom-scroll pr-1">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-900 text-subtext sticky top-0">
+                                    <tr>
+                                        <th class="p-1.5">Data / Rodada</th>
+                                        <th class="p-1.5">Horário</th>
+                                        <th class="p-1.5 text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-rodadas-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-brand-card p-5 rounded-xl border border-[#f26522]/40 glow-orange">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-base font-bold text-white-theme uppercase flex items-center gap-2">
+                                    <i class="fa-solid fa-trophy text-amber-500"></i> TOP 5 INDÚSTRIAS — VOL. VENDAS
+                                </h3>
+                                <div class="text-right">
+                                    <span class="text-xs text-subtext">SHARE TOP 5: </span>
+                                    <span id="share-top5-industrias" class="text-sm font-black text-amber-500">0,00%</span>
+                                </div>
+                            </div>
+                            <div id="top5-industrias-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <!-- ITEM 8: MOTIVOS DE NÃO COMPRA CORRIGIDO E SINCRONIZADO -->
+                        <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                            <h3 class="text-xs font-bold text-subtext uppercase mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-blue-500"></i> Motivos de Não Compra (Feedback Lojistas)
+                            </h3>
+                            <div class="h-44">
+                                <canvas id="rejectionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 space-y-6">
+                        <div class="bg-brand-card p-5 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-base font-bold text-white-theme uppercase flex items-center gap-2">
+                                    <i class="fa-solid fa-store text-emerald-500"></i> TOP 5 LOJAS — VOL. COMPRA
+                                </h3>
+                                <div class="text-right">
+                                    <span class="text-xs text-subtext">SHARE TOP 5: </span>
+                                    <span id="share-top5-lojas" class="text-sm font-black text-emerald-500">0,00%</span>
+                                </div>
+                            </div>
+                            <div id="top5-lojas-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <!-- DESEMPENHO GERAL DOS EXPOSITORES RANKING -->
+                        <div class="bg-brand-card p-4 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-xs font-bold text-subtext uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-list-ol text-amber-500"></i> Desempenho Geral dos Expositores
+                                </h3>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="toggleAnonimizarExpositores()" id="btn-anonimizar-exp" class="bg-slate-800 hover:bg-slate-700 text-subtext border border-slate-700 px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1">
+                                        <i class="fa-solid fa-eye-slash"></i> Ocultar / Anonimizar
+                                    </button>
+                                    <span id="lbl-total-expositores-qtd" class="text-[10px] text-subtext">0 Indústrias</span>
+                                </div>
+                            </div>
+                            <div class="overflow-y-auto max-h-[220px] custom-scroll">
+                                <table class="w-full text-xs text-left">
+                                    <thead class="bg-slate-900 text-subtext sticky top-0">
+                                        <tr>
+                                            <th class="p-1.5">Expositor</th>
+                                            <th class="p-1.5 text-center">Vendas</th>
+                                            <th class="p-1.5 text-right">Total (R$)</th>
+                                            <th class="p-1.5 text-right">% Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="expositores-table-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: REGISTRO DE VOUCHER -->
+        <div id="view-voucher" class="tab-content hidden space-y-6 max-w-4xl mx-auto">
+            <div class="bg-brand-card p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="border-b border-slate-800 pb-4 mb-6 flex justify-between items-center">
+                    <div>
+                        <!-- ITEM 7: Nome atualizado conforme especificação -->
+                        <h2 class="text-xl font-bold text-white-theme flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-[#f26522]"></i> Registrar Voucher / Atendimento na Loja
+                        </h2>
+                        <p class="text-xs text-subtext mt-1">Preenchimento no ato do atendimento para validação das metas e geração de cupons</p>
+                    </div>
+                    <span class="bg-[#f26522]/20 text-[#f26522] border border-[#f26522]/30 text-xs px-3 py-1 rounded-full font-bold">VOUCHER DA SORTE</span>
+                </div>
+
+                <!-- ITEM 6: Funcionamento do Modo de Registro Contínuo corrigido -->
+                <div class="bg-slate-900 p-3 rounded-xl border border-amber-500/40 text-left mb-4 flex justify-between items-center">
+                    <span class="text-xs font-bold uppercase text-amber-500">
+                        <i class="fa-solid fa-thumbtack mr-1"></i> Modo de Registro Contínuo
+                    </span>
+                    <label class="text-xs text-white-theme flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="v-chk-fixar" onchange="toggleFixarVoucherExpositor()" class="rounded bg-slate-800 border-slate-700 text-[#f26522]">
+                        <span class="font-semibold text-amber-500">Fixar para múltiplos atendimentos</span>
+                    </label>
+                </div>
+
+                <form id="form-voucher" onsubmit="handleVoucherSubmit(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Indústria / Expositor</label>
+                            <select id="v-industria" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme focus:border-[#f26522] focus:outline-none">
+                                <option value="">Selecione a Empresa...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Loja / Grupo de Lojas</label>
+                            <select id="v-loja" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme focus:border-[#f26522] focus:outline-none">
+                                <option value="">Selecione a Loja...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Status do Pedido</label>
+                            <select id="v-condicao" required onchange="toggleVoucherValue()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme focus:border-[#f26522] focus:outline-none">
+                                <option value="FECHOU_RODADA">Fechou Pedido na Rodada (1 Voucher)</option>
+                                <option value="FECHOU_ANTECIPADO">Fechou Pedido Antecipado (2 Vouchers)</option>
+                                <option value="FECHOU_LOJA">Fechou Pedido na Loja - Visita Rep.</option>
+                                <option value="NAO_FECHOU">Não Fechou Pedido / Apenas Visita</option>
+                            </select>
+                        </div>
+                        <div id="container-valor">
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Valor Total da Compra (R$)</label>
+                            <input type="number" step="0.01" id="v-valor" placeholder="Ex: 10000.00" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme focus:border-[#f26522] focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Vouchers p/ Sorteio</label>
+                            <input type="text" id="v-vouchers-qtd" readonly value="1 und." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-sm text-amber-500 font-bold cursor-not-allowed">
+                        </div>
+                    </div>
+
+                    <!-- MOTIVOS DO NÃO FECHAMENTO -->
+                    <div id="container-rejeicao" class="hidden bg-slate-200 p-4 rounded-xl border border-slate-400 space-y-2">
+                        <label class="block text-xs font-extrabold uppercase text-slate-900 mb-2 tracking-wider text-dark-rejection">Motivos do Não Fechamento (Selecione)</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-900">
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-900 text-dark-rejection"><input type="checkbox" name="motivo_rejeicao" value="Preço/Prazo" class="rounded border-slate-400 text-[#f26522]"> Preço / Prazo fora da meta</label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-900 text-dark-rejection"><input type="checkbox" name="motivo_rejeicao" value="Mix Indisponível" class="rounded border-slate-400 text-[#f26522]"> Mix de produtos indisponível</label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-900 text-dark-rejection"><input type="checkbox" name="motivo_rejeicao" value="Estoque Alto" class="rounded border-slate-400 text-[#f26522]"> Lojista com estoque cheio</label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-900 text-dark-rejection"><input type="checkbox" name="motivo_rejeicao" value="Pós-Evento" class="rounded border-slate-400 text-[#f26522]"> Vai decidir com sócio pós-evento</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#f26522] hover:bg-[#d5521b] text-white font-bold py-3 rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-ticket"></i> Gerar Voucher & Registrar Pedido
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB: REPOSITÓRIO DE VOUCHERS -->
+        <div id="view-vouchers-list" class="tab-content hidden space-y-6 max-w-5xl mx-auto">
+            <div class="bg-brand-card p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
+                <div class="border-b border-slate-800 pb-4 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white-theme flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-amber-500"></i> Repositório de Vouchers & Números da Sorte
+                        </h2>
+                        <p class="text-xs text-subtext mt-1">Lista consolidada de bilhetes gerados para o sorteio oficial</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="excluirSelecionadosVouchers()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Excluir Selecionados
+                        </button>
+                        <div class="bg-slate-900 border border-slate-700 px-4 py-2 rounded-xl text-right">
+                            <span class="text-xs text-subtext block uppercase font-bold">Total de Cupons Ativos</span>
+                            <span id="lbl-total-vouchers-gerados" class="text-xl font-black text-amber-500">0 Cupons</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-800 custom-scroll max-h-[500px]">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900 text-subtext uppercase sticky top-0">
+                            <tr>
+                                <th class="p-3 text-center"><input type="checkbox" onchange="toggleSelectAll('chk-voucher', this.checked)"></th>
+                                <th class="p-3">Nº da Sorte</th>
+                                <th class="p-3">Nome da Loja</th>
+                                <th class="p-3">Indústria Geradora</th>
+                                <th class="p-3 text-right">Valor da Compra (1x)</th>
+                                <th class="p-3 text-center">Data / Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-vouchers-gerados-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: SORTEIO -->
+        <div id="view-sorteio" class="tab-content hidden space-y-6 max-w-3xl mx-auto">
+            <div class="bg-brand-card p-8 rounded-2xl border border-slate-800 shadow-2xl text-center space-y-6">
+                <div>
+                    <h2 class="text-3xl font-black text-amber-500 uppercase tracking-widest flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-trophy text-amber-500"></i> Sorteio Oficial da Campanha
+                    </h2>
+                    <p class="text-xs text-subtext mt-2">Globo digital de sorteio entre todos os números da sorte ativas</p>
+                </div>
+
+                <div class="bg-slate-900 border-2 border-amber-500/50 rounded-2xl p-8 space-y-4 shadow-inner">
+                    <span class="text-xs font-bold text-subtext uppercase tracking-wider block">Número da Sorte Sorteado</span>
+                    <div id="display-numero-sorte" class="text-6xl font-black font-mono text-amber-500 tracking-widest py-4 bg-brand-dark rounded-xl border border-slate-700 shadow-md">
+                        #0000
+                    </div>
+                    <div id="display-loja-sorteada" class="text-lg font-bold text-white-theme min-h-[28px]">
+                        Clique no botão abaixo para iniciar
+                    </div>
+                </div>
+
+                <button onclick="realizarSorteio()" class="w-full bg-[#f26522] hover:bg-[#d5521b] text-white font-black py-4 rounded-xl text-lg shadow-xl uppercase tracking-wider transition transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-dice text-2xl"></i> Girar Globo & Sortear Lojista
+                </button>
+            </div>
+
+            <div class="bg-brand-card p-5 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="border-b border-slate-800 pb-3 mb-3">
+                    <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-award"></i> Ganhadores Registrados
+                    </h3>
+                    <p class="text-xs text-subtext mt-1">Após o sorteio, os números vencedores deixam de ficar ativos no repositório e permanecem registrados aqui.</p>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900 text-subtext uppercase">
+                            <tr>
+                                <th class="p-3">Nº da Sorte</th>
+                                <th class="p-3">Nome da Loja</th>
+                                <th class="p-3">Indústria Geradora</th>
+                                <th class="p-3 text-right">Valor da Compra</th>
+                                <th class="p-3 text-center">Data</th>
+                                <th class="p-3 text-center">Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-sorteios-realizados" class="divide-y divide-slate-800 text-subtext"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: PASSAPORTE DE VISITA -->
+        <div id="view-passport" class="tab-content hidden space-y-6 max-w-3xl mx-auto">
+            <div class="bg-brand-card p-6 rounded-2xl border border-slate-800 text-center space-y-6 shadow-xl">
+                <div class="inline-block p-4 bg-[#f26522]/10 rounded-full border border-[#f26522]/30">
+                    <i class="fa-solid fa-passport text-5xl text-[#f26522]"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-white-theme">Passaporte Constru Unidos</h2>
+                    <p class="text-xs text-subtext mt-1 max-w-md mx-auto">Validação de visita do lojista no estande do expositor</p>
+                </div>
+
+                <div class="bg-slate-900 p-4 rounded-xl border border-amber-500/40 text-left space-y-3">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-bold uppercase text-amber-500">
+                            <i class="fa-solid fa-filter mr-1"></i> Filtro do Expositor (Seu Estande)
+                        </label>
+                        <label class="text-[11px] text-subtext flex items-center gap-1.5 cursor-pointer">
+                            <input type="checkbox" id="chk-fixar-expositor" onchange="toggleFixarExpositor()" class="rounded bg-slate-800 border-slate-700 text-[#f26522]">
+                            <span class="font-semibold text-amber-500"><i class="fa-solid fa-thumbtack mr-1"></i> Fixar para múltiplos atendimentos</span>
+                        </label>
+                    </div>
+                    <select id="p-expositor-master" onchange="aplicarFiltroMasterExpositor()" class="w-full bg-brand-dark border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme font-semibold">
+                        <option value="">Selecione sua empresa (Expositor)...</option>
+                    </select>
+                </div>
+
+                <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 text-left space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Selecione a Loja Visitante</label>
+                            <select id="p-loja" class="w-full bg-brand-dark border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Estande da Indústria Visitada</label>
+                            <select id="p-industria" class="w-full bg-brand-dark border border-slate-700 rounded-lg p-2.5 text-sm text-white-theme"></select>
+                        </div>
+                    </div>
+
+                    <button onclick="registrarCheckinPassaporte()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-stamp"></i> Carimbar Passaporte / Confirmar Check-in
+                    </button>
+                </div>
+
+                <div class="text-left space-y-2">
+                    <h3 class="text-xs font-bold text-subtext uppercase">Últimos Carimbos Registrados</h3>
+                    <div class="overflow-y-auto max-h-48 custom-scroll bg-slate-900 rounded-lg p-2 border border-slate-800">
+                        <ul id="list-checkins" class="divide-y divide-slate-800 text-xs text-subtext"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ITEM 1: TAB Catálogos de Produtos das Campanhas REMOVIDA do topo principal. Catálogos e Contatos agora estão integrados diretamente no Portal do Lojista e Painel ADM -->
+
+        <!-- TAB 5: PORTAL DO LOJISTA -->
+        <div id="view-lojista" class="tab-content hidden space-y-6 max-w-4xl mx-auto">
+            <div id="lojista-auth-screen" class="bg-brand-card p-8 rounded-2xl border border-slate-800 shadow-2xl max-w-md mx-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <i class="fa-solid fa-store text-4xl text-[#f26522]"></i>
+                    <h2 class="text-xl font-bold text-white-theme">Portal do Lojista</h2>
+                    <p class="text-xs text-subtext">Entre com sua loja para visualizar seu histórico e acessar os catálogos dos fornecedores e contatos dos representantes.</p>
+                </div>
+
+                <form onsubmit="autenticarLojista(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Selecione sua Loja</label>
+                        <select id="login-lojista-select" class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3"></select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Sua Senha</label>
+                        <input type="password" id="login-lojista-pass" placeholder="Digite sua senha..." required class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3">
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#f26522] hover:bg-[#d5521b] text-white font-bold py-2.5 rounded-lg text-xs shadow transition">
+                        Acessar Portal
+                    </button>
+                </form>
+            </div>
+
+            <div id="lojista-dashboard-screen" class="hidden bg-brand-card p-6 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
+                <div class="border-b border-slate-800 pb-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold portal-lojista-title flex items-center gap-2">
+                            <i class="fa-solid fa-user-lock text-[#f26522]"></i> Portal do Lojista — Consulta Restrita
+                        </h2>
+                        <p class="text-xs text-subtext mt-1">Bem-vindo(a), <span id="lbl-nome-loja-logada" class="portal-lojista-title font-bold"></span></p>
+                    </div>
+                    <button onclick="logoutLojista()" class="bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-500/30 text-xs px-3 py-1.5 rounded-lg font-bold">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Sair do Portal
+                    </button>
+                </div>
+
+                <!-- CARDS DE METRICAS LOJISTA -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
+                        <span class="portal-lojista-title text-xs font-bold block uppercase tracking-wide">Total Comprado no Evento</span>
+                        <div id="lojista-total-comprado" class="text-2xl font-black text-emerald-400 mt-1">R$ 0,00</div>
+                    </div>
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
+                        <span class="portal-lojista-title text-xs font-bold block uppercase tracking-wide">Vouchers Acumulados</span>
+                        <div id="lojista-total-vouchers" class="text-2xl font-black text-amber-400 mt-1">0 Vouchers</div>
+                    </div>
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700">
+                        <span class="portal-lojista-title text-xs font-bold block uppercase tracking-wide">Média de Compra</span>
+                        <div id="lojista-media-compra" class="text-2xl font-black text-blue-400 mt-1">R$ 0,00</div>
+                    </div>
+                </div>
+
+                <!-- Base cadastral da loja autenticada -->
+                <div class="space-y-3 bg-slate-900/90 p-5 rounded-xl border border-slate-700">
+                    <h3 class="text-sm font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-id-card"></i> Base Cadastral da Loja
+                    </h3>
+                    <p class="portal-lojista-light-text text-xs">Dados cadastrais disponibilizados pelo administrador para consulta restrita.</p>
+                    <div id="lojista-base-cadastral" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+                </div>
+
+                <!-- ITEM 2: Área de Contatos dos Representantes disponibilizada no Portal do Lojista -->
+                <div class="space-y-3 bg-slate-900/90 p-5 rounded-xl border border-slate-700">
+                    <h3 class="text-sm font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-address-card text-[#f26522]"></i> Contatos dos Representantes Comerciais
+                    </h3>
+                    <p class="portal-lojista-light-text text-xs">Consulte os dados dos representantes das marcas e entre em contato direto quando necessário.</p>
+                    <div id="lojista-representantes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3"></div>
+                </div>
+
+                <div class="space-y-3 bg-slate-900/90 p-5 rounded-xl border border-slate-700">
+                    <h3 class="text-sm font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-headset"></i> Visita do Representante
+                    </h3>
+                    <p class="portal-lojista-light-text text-xs">Solicite uma visita técnica, comercial ou de suporte ao representante da indústria parceira.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+                        <div>
+                            <label class="portal-lojista-light-text block text-[11px] font-bold uppercase mb-1">Selecione o Fornecedor Parceiro</label>
+                            <select id="visita-fornecedor-select" class="w-full bg-slate-800 border border-slate-700 text-white-theme text-xs rounded p-2.5">
+                                <option value="">Carregando parceiros...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="portal-lojista-light-text block text-[11px] font-bold uppercase mb-1">Tipo de Solicitação</label>
+                            <select id="visita-tipo-select" class="w-full bg-slate-800 border border-slate-700 text-white-theme text-xs rounded p-2.5">
+                                <option value="solicitar visita técnica">Solicitar Visita Técnica</option>
+                                <option value="solicitar visita para negociação">Solicitar Visita para Negociação</option>
+                                <option value="solicitar atendimento ou visita de suporte">Solicitar Atendimento / Visita de Suporte</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="solicitarVisitaRepresentante()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded text-xs transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Enviar Solicitação via WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 bg-slate-900/90 p-5 rounded-xl border border-slate-700">
+                    <h3 class="text-sm font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check"></i> Consolidação de Atendimentos & Pesquisa NPS
+                    </h3>
+                    <p class="portal-lojista-light-text text-xs">Confira as vendas e atendimentos registrados para sua loja e avalie a qualidade do atendimento recebido.</p>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-900 text-slate-200 uppercase">
+                                <tr>
+                                    <th class="p-3">Data / Hora</th>
+                                    <th class="p-3">Quem Registrou (Empresa)</th>
+                                    <th class="p-3 text-right">Valor Registrado</th>
+                                    <th class="p-3 text-center">Status / Avaliação NPS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-lojista-nps-atendimentos" class="divide-y divide-slate-800 text-subtext bg-brand-dark/50"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ITEM 4: CATÁLOGOS EXCLUSIVAMENTE HABILITADOS PARA VISUALIZAÇÃO NO PORTAL LOJISTA -->
+                <div class="space-y-3 bg-slate-900/90 p-5 rounded-xl border border-slate-700">
+                    <h3 class="text-sm font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-[#f26522]"></i> Catálogos de Campanhas dos Fornecedores
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3" id="lojista-catalogos-list"></div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-receipt text-[#f26522]"></i> Suas Compras e Atendimentos Registrados
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-900 text-slate-200 uppercase">
+                                <tr>
+                                    <th class="p-3">Expositor / Indústria</th>
+                                    <th class="p-3">Status Negociação</th>
+                                    <th class="p-3 text-right">Valor Comprado</th>
+                                    <th class="p-3 text-center">Vouchers Gerados</th>
+                                    <th class="p-3 text-right">Média de Compra</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-lojista-atendimentos" class="divide-y divide-slate-800 text-subtext bg-brand-dark/50"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold portal-lojista-title uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-stamp text-[#f26522]"></i> Status de Check-ins de Passaporte
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-900 text-slate-200 uppercase">
+                                <tr>
+                                    <th class="p-3">Indústria / Estande Visitado</th>
+                                    <th class="p-3">Horário do Carimbo</th>
+                                    <th class="p-3 text-center">Status Passaporte</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-lojista-passaporte" class="divide-y divide-slate-800 text-subtext bg-brand-dark/50"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: PLANILHA DE DADOS AUDITADOS -->
+        <div id="view-planilha" class="tab-content hidden space-y-6">
+            <div id="planilha-auth-screen" class="bg-brand-card p-8 rounded-2xl border border-slate-800 shadow-2xl max-w-md mx-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <i class="fa-solid fa-table text-4xl text-emerald-500"></i>
+                    <h2 class="text-xl font-bold text-white-theme">Visão Planilha — Acesso Restrito</h2>
+                    <p class="text-xs text-subtext">Informe suas credenciais de administrador.</p>
+                </div>
+
+                <form onsubmit="autenticarPlanilha(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Usuário / Login</label>
+                        <input type="text" id="login-planilha-user" placeholder="Login..." required class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Senha</label>
+                        <input type="password" id="login-planilha-pass" placeholder="Senha..." required class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3">
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-xs shadow transition">
+                        Acessar Planilha
+                    </button>
+                </form>
+            </div>
+
+            <div id="planilha-main-screen" class="hidden bg-white p-6 rounded-2xl border border-slate-300 shadow-2xl space-y-4 text-slate-900">
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-table text-emerald-600"></i> Visão de Dados em Nível de Planilha
+                        </h2>
+                        <p class="text-xs text-slate-600 mt-1">Acompanhamento consolidado com registro auditado de visitas, CNPJ e Avaliação NPS</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="excluirSelecionadosPlanilha()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-2 rounded-lg text-xs shadow flex items-center gap-1 transition">
+                            <i class="fa-solid fa-trash"></i> Excluir Selecionados
+                        </button>
+                        <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                            <i class="fa-solid fa-file-excel"></i> Exportar XLS/Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto custom-scroll max-h-[600px] border border-slate-300 rounded-xl shadow-inner bg-slate-50">
+                    <table class="w-full text-xs text-left text-slate-900">
+                        <thead class="bg-slate-200 text-slate-900 uppercase sticky top-0 font-extrabold border-b border-slate-300">
+                            <tr>
+                                <th class="p-3 text-center"><input type="checkbox" onchange="toggleSelectAll('chk-planilha', this.checked)"></th>
+                                <th class="p-3">ID</th>
+                                <th class="p-3">Data/Hora</th>
+                                <th class="p-3">Indústria / Expositor</th>
+                                <th class="p-3">Loja / Comprador</th>
+                                <th class="p-3">CNPJ Loja</th>
+                                <th class="p-3 text-center">Visitas (Passaporte)</th>
+                                <th class="p-3">Condição</th>
+                                <th class="p-3 text-right">Valor (R$)</th>
+                                <th class="p-3 text-center">Vouchers</th>
+                                <th class="p-3 text-center">Nota NPS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-planilha-body" class="divide-y divide-slate-200 text-slate-800 bg-white"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: PAINEL ADM -->
+        <div id="view-admin" class="tab-content hidden space-y-6 max-w-6xl mx-auto">
+            <div id="admin-auth-screen" class="bg-brand-card p-8 rounded-2xl border border-slate-800 shadow-2xl max-w-md mx-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <i class="fa-solid fa-user-shield text-4xl text-amber-500"></i>
+                    <h2 class="text-xl font-bold text-white-theme">Painel ADM — Consulta Restrita</h2>
+                    <p class="text-xs text-subtext">Login para administradores do evento.</p>
+                </div>
+
+                <form onsubmit="autenticarAdmin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Usuário / Login</label>
+                        <input type="text" id="login-admin-user" placeholder="Login..." required class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-subtext mb-1">Senha</label>
+                        <input type="password" id="login-admin-pass" placeholder="Senha..." required class="w-full bg-slate-900 border border-slate-700 text-white-theme text-xs rounded-lg p-3">
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#f26522] hover:bg-[#d5521b] text-white font-bold py-2.5 rounded-lg text-xs shadow transition">
+                        Entrar no Painel ADM
+                    </button>
+                </form>
+            </div>
+
+            <div id="admin-main-screen" class="hidden bg-brand-card p-6 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
+                <div class="border-b border-slate-800 pb-4 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white-theme flex items-center gap-2">
+                            <i class="fa-solid fa-user-shield text-amber-500"></i> Gestão Avançada ADM — Controle Total
+                        </h2>
+                        <p class="text-xs text-subtext mt-1">Controle dinâmico de rodadas, lojas, empresas, uploads e catálogos.</p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                            <i class="fa-solid fa-right-from-bracket"></i> Sair Painel ADM
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 1: EDITAR NOME E LOCALIZAÇÃO DO EVENTO PRINCIPAL -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar Nome e Localização do Evento Principal
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Nome do Evento</label>
+                            <input type="text" id="adm-evento-nome" placeholder="Ex: 7º Encontro de Negócios" class="w-full bg-slate-800 border border-slate-700 rounded p-2.5 text-xs text-white-theme">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Subtítulo / Local do Evento</label>
+                            <input type="text" id="adm-evento-local" placeholder="Ex: Garanhuns/PE — AGA Associação Garanhuense de Atletismo" class="w-full bg-slate-800 border border-slate-700 rounded p-2.5 text-xs text-white-theme">
+                        </div>
+                    </div>
+                    <button onclick="salvarConfiguracoesEvento()" class="bg-[#f26522] hover:bg-[#d5521b] text-white font-bold px-4 py-2 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar Nome do Evento em Todo o Sistema
+                    </button>
+                </div>
+
+                <!-- SEÇÃO 2: MODO DE OPERAÇÃO E RESET DE DADOS -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Modo de Operação e Reset de Dados
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-subtext mb-1">Modo Atual do Ambiente</label>
+                            <div class="flex items-center gap-4 text-xs font-bold text-white-theme">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="modo_ambiente" value="OFICIAL" id="modo-oficial" onchange="alterarModoAmbiente('OFICIAL')" class="text-[#f26522]">
+                                    Modo Oficial (Produção)
+                                </label>
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="modo_ambiente" value="SIMULADO" id="modo-simulado" onchange="alterarModoAmbiente('SIMULADO')" class="text-[#f26522]">
+                                    Modo Simulado (Demonstração)
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-red-400 mb-1">Ação Crítica de Limpeza</label>
+                            <button onclick="resetarResultadosAmbiente()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2.5 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Resetar Resultados do Ambiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 3: GESTÃO DE PARCEIROS, PATROCINADORES E REPRESENTANTES (ITEMS 2 e 3 INSERIDOS) -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-handshake"></i> (Cadastro Parceiros) — Gestão de Patrocinadores e Cooperação
+                        </h3>
+                        <button onclick="excluirParceirosSelecionadosADM()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Excluir Selecionados
+                        </button>
+                    </div>
+
+                    <!-- ITEM 2 e ITEM 3: FORMULÁRIO DE CADASTRO EXPANDIDO COM OS NOVOS CAMPOS -->
+                    <form onsubmit="cadastrarParceiroADM(event)" class="bg-slate-800 p-4 rounded-xl space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">Nome da Empresa / Selecione *</label>
+                                <select id="p-empresa-select" onchange="sincronizarNomeEmpresaParceiro()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                                    <option value="">Selecione ou digite abaixo...</option>
+                                </select>
+                                <input type="text" id="p-empresa-nome" required placeholder="Ex: ABC Indústria" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme mt-1">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">Nome do Representante *</label>
+                                <input type="text" id="p-contato-nome" required placeholder="Ex: João Silva" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">Função / Cargo *</label>
+                                <input type="text" id="p-funcao" required placeholder="Ex: Gerente Comercial" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">Contato WhatsApp *</label>
+                                <input type="text" id="p-whats" required placeholder="Ex: 81999998888" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">E-mail para Contato *</label>
+                                <input type="email" id="p-email" required placeholder="Ex: contato@empresa.com" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">UF de Atuação *</label>
+                                <input type="text" id="p-uf" required placeholder="Ex: PE, AL, PB" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                        </div>
+
+                        <!-- ITEM 3: NOVOS CAMPOS ADICIONADOS CONFORME SOLICITADO -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-slate-700">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-emerald-400 mb-1"><i class="fa-solid fa-calendar-check mr-1"></i> Data de Admissão *</label>
+                                <input type="date" id="p-data-admissao" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-amber-400 mb-1"><i class="fa-solid fa-calendar-xmark mr-1"></i> Data de Vencimento Contrato *</label>
+                                <input type="date" id="p-data-vencimento" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-blue-400 mb-1"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Verba de Participação *</label>
+                                <select id="p-verba-participacao" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                                    <option value="Mensal">Mensal</option>
+                                    <option value="Bimestral">Bimestral</option>
+                                    <option value="Trimestral">Trimestral</option>
+                                    <option value="Semestral">Semestral</option>
+                                    <option value="Anual">Anual</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-1">Upload Logo da Empresa (Imagem)</label>
+                                <input type="file" id="p-logo-file" accept="image/*" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white-theme">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-subtext mb-2">Modalidade de Parceria *</label>
+                                <div class="flex flex-wrap gap-4 text-xs text-white-theme pt-1">
+                                    <label class="flex items-center gap-1.5 cursor-pointer font-medium">
+                                        <input type="radio" name="modalidade_parceria" value="Patrocinador do evento" checked class="text-[#f26522]">
+                                        Patrocinador do evento
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer font-medium">
+                                        <input type="radio" name="modalidade_parceria" value="Contrato de cooperação" class="text-[#f26522]">
+                                        Contrato de cooperação
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer font-medium">
+                                        <input type="radio" name="modalidade_parceria" value="Os dois (Patrocinador e Cooperação)" class="text-[#f26522]">
+                                        Os dois
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                            <i class="fa-solid fa-plus-circle"></i> Cadastrar Representante / Parceiro
+                        </button>
+                    </form>
+
+                    <div class="overflow-x-auto rounded-lg border border-slate-800 custom-scroll max-h-[350px]">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-800 text-subtext uppercase sticky top-0">
+                                <tr>
+                                    <th class="p-2.5 text-center"><input type="checkbox" onchange="toggleSelectAll('chk-parceiro-adm', this.checked)"></th>
+                                    <th class="p-2.5">Logo</th>
+                                    <th class="p-2.5">Empresa</th>
+                                    <th class="p-2.5">Representante</th>
+                                    <th class="p-2.5">Contato / Email / UF</th>
+                                    <th class="p-2.5">Admissão / Vencimento</th>
+                                    <th class="p-2.5">Verba</th>
+                                    <th class="p-2.5">Modalidade</th>
+                                    <th class="p-2.5 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-adm-parceiros-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 4: UPLOAD DE LOGO DO EVENTO -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-image"></i> Personalização da Logo do Evento (Topo Superior Esquerdo)
+                    </h3>
+                    <p class="text-xs text-subtext">Faça upload da imagem da logo do evento. Ela será exibida ao lado das informações principais.</p>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <input type="file" id="input-event-logo" accept="image/*" class="bg-slate-800 border border-slate-700 text-xs text-white-theme p-2 rounded-lg">
+                        <button onclick="salvarLogoEvento()" class="bg-[#f26522] hover:bg-[#d5521b] text-white font-bold px-4 py-2 rounded-lg text-xs shadow flex items-center gap-2 transition">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar (Inserir Logo)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 5: LISTA DE LOJAS CADASTRADAS COM CNPJ -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-store"></i> Lojas Cadastradas no Sistema (Ordenadas por UF / Município / Nome / Nr Loja / Grupo / CNPJ)
+                        </h3>
+                        <button onclick="excluirLojasSelecionadasADM()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Excluir Selecionadas
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-lg border border-slate-800 custom-scroll max-h-[300px]">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-800 text-subtext uppercase sticky top-0">
+                                <tr>
+                                    <th class="p-2.5 text-center"><input type="checkbox" onchange="toggleSelectAll('chk-loja-adm', this.checked)"></th>
+                                    <th class="p-2.5">UF</th>
+                                    <th class="p-2.5">Município</th>
+                                    <th class="p-2.5">Nome da Loja</th>
+                                    <th class="p-2.5">CNPJ</th>
+                                    <th class="p-2.5 text-center">Nr. Loja</th>
+                                    <th class="p-2.5 text-center">Grupo</th>
+                                    <th class="p-2.5 text-center">Nr. Vouchers</th>
+                                    <th class="p-2.5 text-center">Nr. Carimbos Passaporte</th>
+                                    <th class="p-2.5 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-adm-lojas-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 6: FORMULÁRIOS DE INSERÇÃO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <h4 class="text-xs font-bold text-white-theme uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-emerald-500"></i> Inserir Nova Loja
+                        </h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="adm-loja-nome" placeholder="Loja *" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            <input type="text" id="adm-loja-cnpj" placeholder="CNPJ *" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            <input type="text" id="adm-loja-uf" placeholder="UF" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            <input type="text" id="adm-loja-grupo" placeholder="Grupo" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            <input type="text" id="adm-loja-nr" placeholder="Nr. Loja" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                            <input type="text" id="adm-loja-municipio" placeholder="Município" class="bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                        </div>
+                        <input type="url" id="adm-loja-maps" placeholder="Link do Google Maps (Ex: https://maps.google.com/?q=...)" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme">
+                        <p class="text-[10px] text-subtext">Senha padrão do acesso restrito do lojista: <strong class="text-amber-400">parceiro.construunidos.2026@</strong></p>
+                        <button onclick="cadastrarNovaLojaADM()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Inserir nova loja
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xs font-bold text-white-theme uppercase flex items-center gap-2 mb-3">
+                                <i class="fa-solid fa-industry text-[#f26522]"></i> Inserir Nova Empresa / Expositor na Rodada
+                            </h4>
+                            <input type="text" id="adm-empresa-nome" placeholder="Nome da Empresa / Expositor *" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-xs text-white-theme mb-2">
+                        </div>
+                        <button onclick="cadastrarNovaEmpresaADM()" class="w-full bg-[#f26522] hover:bg-[#d5521b] text-white font-bold py-2 rounded text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Inserir nova empresa
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 7: GERENCIAMENTO DAS RODADAS -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-clock"></i> Gerenciar Rodadas, Horários e Status
+                        </h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="excluirSelecionadosRodadas()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-trash"></i> Excluir Selecionados
+                            </button>
+                            <button onclick="salvarAgendaRodadas()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-floppy-disk"></i> Salvar Agenda
+                            </button>
+                            <button onclick="adicionarNovaRodada()" class="bg-[#f26522] hover:bg-[#d5521b] text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Inserir Nova Rodada
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-lg border border-slate-800">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-800 text-subtext uppercase">
+                                <tr>
+                                    <th class="p-2.5 text-center"><input type="checkbox" onchange="toggleSelectAll('chk-rodada', this.checked)"></th>
+                                    <th class="p-2.5">Agendamento (Dia)</th>
+                                    <th class="p-2.5">Nº Rodada</th>
+                                    <th class="p-2.5">Horário da Rodada</th>
+                                    <th class="p-2.5 text-center">Status (Calculado)</th>
+                                    <th class="p-2.5 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-admin-rodadas-body" class="divide-y divide-slate-800 text-subtext"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ITEM 4: SEÇÃO 8: UPLOAD DE CATÁLOGO PDF DAS INDÚSTRIAS (ÚNICO LOCAL NO HTML PARA GERENCIAMENTO DE UPLOAD) -->
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <h3 class="text-sm font-bold text-[#f26522] uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-file-pdf"></i> Upload de Catálogo PDF das Indústrias
+                        </h3>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <label class="text-xs text-subtext flex items-center gap-2 cursor-pointer px-2 py-1.5 rounded border border-slate-700 bg-slate-800">
+                                <input type="checkbox" id="chk-all-empresa-pdf" onchange="toggleSelectAll('chk-empresa-pdf', this.checked)">
+                                <span class="font-bold">Selecionar tudo</span>
+                            </label>
+                            <button onclick="excluirEmpresasSelecionadasADM()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1 shadow">
+                                <i class="fa-solid fa-trash"></i> Excluir as empresas selecionadas
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="adm-catalogos-gerenciador"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark border-t border-slate-800 py-4 px-6 text-center text-xs text-subtext mt-auto">
+        <p>&copy; 2026 Rede Constru Unidos — Todos os direitos reservados. | <span id="lbl-footer-evento">7º Encontro de Negócios</span></p>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT COMPLETA E INTEGRADA -->
+    <script>
+        /* ================================================================
+           Constru Unidos — Painel de Rodada de Negócios
+           V1.8.0 — Correções e melhorias solicitadas
+           ================================================================ */
+
+        const PORTAL_PARCEIRO_SENHA = 'parceiro.construunidos.2026@';
+        const STORAGE_KEY = 'rodada_negocios_state';
+
+        const DEFAULT_STATE = {
+            authenticated: { lojista: false, planilha: false, admin: false },
+            loggedLojista: null,
+            anonimizarExpositores: false,
+            eventLogo: 'logo_construnidos_3.png',
+            nomeEvento: '7º Encontro de Negócios',
+            localEvento: 'Garanhuns/PE — AGA Associação Garanhuense de Atletismo',
+            modoAmbiente: 'OFICIAL',
+            parceiros: [],
+            rodadas: [
+                { id: 1, dia: '2026-09-09', nome: '1ª Rodada', horario: '08:00 - 08:30' },
+                { id: 2, dia: '2026-09-09', nome: '2ª Rodada', horario: '08:30 - 09:00' },
+                { id: 3, dia: '2026-09-09', nome: '3ª Rodada', horario: '09:00 - 09:30' },
+                { id: 4, dia: '2026-09-09', nome: '4ª Rodada', horario: '09:30 - 10:00' },
+                { id: 5, dia: '2026-09-09', nome: '5ª Rodada', horario: '10:00 - 10:30' },
+                { id: 6, dia: '2026-09-09', nome: '6ª Rodada', horario: '10:30 - 11:00' },
+                { id: 7, dia: '2026-09-09', nome: '7ª Rodada', horario: '11:00 - 11:30' },
+                { id: 8, dia: '2026-09-09', nome: '8ª Rodada', horario: '11:30 - 12:00' }
+            ],
+            industrias: [
+                { id: 1, nome: 'Aliança', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 2, nome: 'Azure', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 3, nome: 'Bosch', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 4, nome: 'Censi', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 5, nome: 'Fortlev', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 6, nome: 'Granpel', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 7, nome: 'Grupo Vellore', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 8, nome: 'Mectronic', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 9, nome: 'Metais Rainha', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 10, nome: 'P&J', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 11, nome: 'Plastimar', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 12, nome: 'Pointer', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 13, nome: 'Quartzolit / Brasilit', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 14, nome: 'Romazi', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 15, nome: 'Tekbond', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' },
+                { id: 16, nome: 'Pisos Realle', pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '' }
+            ],
+            lojas: [
+                { id: 101, nome: 'Construções Silva - Recife', cnpj: '00.000.000/0001-01', uf: 'PE', grupo: 'G1', nrLoja: '101', municipio: 'Recife', pass: '1234', maps: 'https://maps.google.com' },
+                { id: 102, nome: 'Arapiraca Materiais - AL', cnpj: '00.000.000/0001-02', uf: 'AL', grupo: 'G1', nrLoja: '102', municipio: 'Arapiraca', pass: '1234', maps: 'https://maps.google.com' },
+                { id: 103, nome: 'Garanhuns Edificações - PE', cnpj: '00.000.000/0001-03', uf: 'PE', grupo: 'G2', nrLoja: '103', municipio: 'Garanhuns', pass: '1234', maps: 'https://maps.google.com' },
+                { id: 104, nome: 'Maceió Acabamentos - AL', cnpj: '00.000.000/0001-04', uf: 'AL', grupo: 'G2', nrLoja: '104', municipio: 'Maceió', pass: '1234', maps: 'https://maps.google.com' },
+                { id: 105, nome: 'Unidos Caruaru - PE', cnpj: '00.000.000/0001-05', uf: 'PE', grupo: 'G3', nrLoja: '105', municipio: 'Caruaru', pass: '1234', maps: 'https://maps.google.com' }
+            ],
+            representantes: [],
+            atendimentos: [],
+            vouchers: [],
+            checkins: [],
+            rejeicoes: { 'Preço/Prazo': 0, 'Mix Indisponível': 0, 'Estoque Alto': 0, 'Pós-Evento': 0 },
+            sorteiosRealizados: [],
+            lojistaCatalogosOcultos: {},
+            fixarVoucherExpositor: false,
+            fixarExpositor: false
+        };
+
+        let state = loadState();
+        let rejectionChartInstance = null;
+        let blobUrlsAtivos = [];
+
+        /* ---------------------- Helpers ---------------------- */
+        function clone(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        function normalizeName(value) {
+            return String(value || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function nowIsoLike() {
+            return new Date().toISOString();
+        }
+
+        function formatDateTimePt(value) {
+            const d = value ? new Date(value) : new Date();
+            if (Number.isNaN(d.getTime())) return String(value || '');
+            return d.toLocaleString('pt-BR');
+        }
+
+        function formatMoney(value) {
+            return `R$ ${Number(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        function digitsOnly(value) {
+            return String(value || '').replace(/\D/g, '');
+        }
+
+        function getIndustryByName(name) {
+            const key = normalizeName(name);
+            return state.industrias.find(i => normalizeName(i.nome) === key) || null;
+        }
+
+        function getUniqueFornecedorNames() {
+            const map = new Map();
+            [...(state.industrias || []), ...(state.parceiros || [])].forEach(item => {
+                const nome = String(item.nome || item.empresa || '').trim();
+                if (!nome) return;
+                const key = normalizeName(nome);
+                if (!map.has(key)) map.set(key, nome);
+            });
+            return Array.from(map.values()).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        }
+
+        function getRepresentativeForFornecedor(nomeEmpresa, loja) {
+            const reps = (state.representantes || []).filter(r => normalizeName(r.empresa) === normalizeName(nomeEmpresa));
+            if (!reps.length) return null;
+            const byUf = loja && reps.find(r => normalizeName(r.uf) === normalizeName(loja.uf));
+            return byUf || reps[0];
+        }
+
+        function persistAndRefresh({ portal = true } = {}) {
+            saveState();
+            populateSelects();
+            renderRodadasTable();
+            renderTopList();
+            renderVouchersList();
+            renderCheckinsList();
+            renderPlanilha();
+            renderAdmLojasTable();
+            renderAdmParceirosTable();
+            renderAdmCatalogosManager();
+            renderSorteiosRealizados();
+            if (portal && state.loggedLojista) renderLojistaPortalData();
+        }
+
+        /* ---------------------- Persistência ---------------------- */
+        function loadState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const base = clone(DEFAULT_STATE);
+            if (!saved) return base;
+            try {
+                const parsed = JSON.parse(saved);
+                const merged = { ...base, ...parsed };
+                merged.authenticated = { ...base.authenticated, ...(parsed.authenticated || {}) };
+                merged.rejeicoes = { ...base.rejeicoes, ...(parsed.rejeicoes || {}) };
+                merged.parceiros = Array.isArray(parsed.parceiros) ? parsed.parceiros : [];
+                merged.representantes = Array.isArray(parsed.representantes) ? parsed.representantes : [];
+                merged.atendimentos = Array.isArray(parsed.atendimentos) ? parsed.atendimentos : [];
+                merged.vouchers = Array.isArray(parsed.vouchers) ? parsed.vouchers : [];
+                merged.checkins = Array.isArray(parsed.checkins) ? parsed.checkins : [];
+                merged.sorteiosRealizados = Array.isArray(parsed.sorteiosRealizados) ? parsed.sorteiosRealizados : [];
+                merged.lojistaCatalogosOcultos = parsed.lojistaCatalogosOcultos && typeof parsed.lojistaCatalogosOcultos === 'object' ? parsed.lojistaCatalogosOcultos : {};
+                merged.lojas = Array.isArray(parsed.lojas) ? parsed.lojas : clone(base.lojas);
+                merged.industrias = Array.isArray(parsed.industrias) ? parsed.industrias : clone(base.industrias);
+                merged.rodadas = Array.isArray(parsed.rodadas) ? parsed.rodadas : clone(base.rodadas);
+                
+                merged.industrias = merged.industrias.map(i => ({ pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: '', ...i }));
+                merged.lojas = merged.lojas.map(l => ({ maps: '', pass: '1234', ...l }));
+                merged.atendimentos = merged.atendimentos.map(a => ({ nps: null, timestamp: a.timestamp || nowIsoLike(), ...a }));
+                
+                // ITEM 3: Garante retrocompatibilidade nos parceiros salvos
+                merged.parceiros = merged.parceiros.map(p => ({
+                    dataAdmissao: p.dataAdmissao || new Date().toISOString().split('T')[0],
+                    dataVencimento: p.dataVencimento || new Date(Date.now() + 365*24*60*60*1000).toISOString().split('T')[0],
+                    verbaParticipacao: p.verbaParticipacao || 'Mensal',
+                    uf: p.uf || 'PE',
+                    ...p
+                }));
+
+                return merged;
+            } catch (error) {
+                console.error('Falha ao carregar estado persistido:', error);
+                return base;
+            }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (error) {
+                console.error('Falha ao salvar localStorage:', error);
+                alert('Não foi possível salvar os dados no navegador. O armazenamento pode ter sido excedido por conta de imagens ou PDFs grandes.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initSystem);
+
+        function initSystem() {
+            if (state.eventLogo) {
+                const imgLogo = document.getElementById('img-event-logo');
+                if (imgLogo) imgLogo.src = state.eventLogo;
+            }
+            updateEventoHeaderUI();
+            updateModoAmbienteUI();
+            toggleVoucherValue();
+            renderRodadasTable();
+            populateSelects();
+            renderTopList();
+            renderVouchersList();
+            renderCheckinsList();
+            renderPlanilha();
+            renderAdmLojasTable();
+            renderAdmParceirosTable();
+            renderAdmCatalogosManager();
+            renderSorteiosRealizados();
+            initRejectionChart();
+            setInterval(renderRodadasTable, 60000);
+        }
+
+        /* ---------------------- Evento / Ambiente ---------------------- */
+        function updateEventoHeaderUI() {
+            const lblNome = document.getElementById('lbl-header-evento');
+            const lblLocal = document.getElementById('lbl-header-local');
+            const lblFooter = document.getElementById('lbl-footer-evento');
+            const inpNome = document.getElementById('adm-evento-nome');
+            const inpLocal = document.getElementById('adm-evento-local');
+            if (lblNome) lblNome.innerText = state.nomeEvento || DEFAULT_STATE.nomeEvento;
+            if (lblLocal) lblLocal.innerText = state.localEvento || DEFAULT_STATE.localEvento;
+            if (lblFooter) lblFooter.innerText = state.nomeEvento || DEFAULT_STATE.nomeEvento;
+            if (inpNome) inpNome.value = state.nomeEvento || '';
+            if (inpLocal) inpLocal.value = state.localEvento || '';
+        }
+
+        function salvarConfiguracoesEvento() {
+            const nome = document.getElementById('adm-evento-nome').value.trim();
+            const local = document.getElementById('adm-evento-local').value.trim();
+            if (!nome) return alert('O nome do evento não pode ser vazio.');
+            state.nomeEvento = nome;
+            state.localEvento = local;
+            saveState();
+            updateEventoHeaderUI();
+            showToast('Sucesso', 'Nome e localização do evento atualizados em todo o sistema.');
+        }
+
+        function updateModoAmbienteUI() {
+            const radioOficial = document.getElementById('modo-oficial');
+            const radioSimulado = document.getElementById('modo-simulado');
+            if (state.modoAmbiente === 'SIMULADO') {
+                if (radioSimulado) radioSimulado.checked = true;
+            } else {
+                state.modoAmbiente = 'OFICIAL';
+                if (radioOficial) radioOficial.checked = true;
+            }
+        }
+
+        function alterarModoAmbiente(modo) {
+            state.modoAmbiente = modo;
+            saveState();
+            showToast('Modo Alterado', `O sistema agora está operando no modo: ${modo}.`);
+        }
+
+        function resetarResultadosAmbiente() {
+            if (!confirm('ATENÇÃO: Deseja REALMENTE resetar todos os resultados, atendimentos, vouchers, passaportes, NPS, sorteios e estatísticas do ambiente? Esta ação é irreversível.')) return;
+            state.atendimentos = [];
+            state.vouchers = [];
+            state.checkins = [];
+            state.sorteiosRealizados = [];
+            state.rejeicoes = clone(DEFAULT_STATE.rejeicoes);
+            saveState();
+            initSystem();
+            showToast('Ambiente Resetado', 'Todos os dados de resultados e atendimentos foram zerados.');
+        }
+
+        /* ---------------------- Empresas / Parceiros ---------------------- */
+        function ensureIndustryExists(nome, logoUrl = '') {
+            const existing = getIndustryByName(nome);
+            if (existing) {
+                if (logoUrl) existing.logoUrl = logoUrl;
+                return existing;
+            }
+            const ind = { id: Date.now() + Math.floor(Math.random() * 1000), nome: nome.trim(), pdfUrl: '', pdfNome: '', dataUpload: '', logoUrl: logoUrl || '' };
+            state.industrias.push(ind);
+            return ind;
+        }
+
+        function removerEmpresaCompleta(idEmpresa) {
+            const ind = state.industrias.find(i => Number(i.id) === Number(idEmpresa));
+            if (!ind) return;
+            if (!confirm(`Atenção: a empresa "${ind.nome}" será removida do ambiente ativo. Os atendimentos históricos permanecerão na Visão Planilha. Confirmar?`)) return;
+            const key = normalizeName(ind.nome);
+            state.industrias = state.industrias.filter(i => Number(i.id) !== Number(idEmpresa));
+            state.parceiros = (state.parceiros || []).filter(p => normalizeName(p.empresa) !== key);
+            state.representantes = (state.representantes || []).filter(r => normalizeName(r.empresa) !== key);
+            state.vouchers = (state.vouchers || []).filter(v => normalizeName(v.industria) !== key);
+            state.checkins = (state.checkins || []).filter(c => normalizeName(c.industria) !== key);
+            persistAndRefresh();
+            showToast('Empresa Excluída', `${ind.nome} foi removida do ambiente ativo.`);
+        }
+
+        function excluirEmpresasSelecionadasADM() {
+            const ids = Array.from(document.querySelectorAll('.chk-empresa-pdf:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhuma empresa selecionada para remoção.');
+            if (!confirm(`Deseja remover as ${ids.length} empresas selecionadas de todo o ambiente ativo? Os atendimentos históricos permanecerão na planilha.`)) return;
+            const names = state.industrias.filter(i => ids.includes(Number(i.id))).map(i => normalizeName(i.nome));
+            state.industrias = state.industrias.filter(i => !ids.includes(Number(i.id)));
+            state.parceiros = (state.parceiros || []).filter(p => !names.includes(normalizeName(p.empresa)));
+            state.representantes = (state.representantes || []).filter(r => !names.includes(normalizeName(r.empresa)));
+            state.vouchers = (state.vouchers || []).filter(v => !names.includes(normalizeName(v.industria)));
+            state.checkins = (state.checkins || []).filter(c => !names.includes(normalizeName(c.industria)));
+            saveState();
+            persistAndRefresh();
+            const master = document.getElementById('chk-all-empresa-pdf');
+            if (master) master.checked = false;
+            showToast('Exclusão Concluída', 'As empresas selecionadas foram removidas do ambiente ativo.');
+        }
+
+        function cadastrarNovaEmpresaADM() {
+            const nome = document.getElementById('adm-empresa-nome').value.trim();
+            if (!nome) return alert('Informe o nome da empresa.');
+            if (getUniqueFornecedorNames().some(n => normalizeName(n) === normalizeName(nome))) {
+                alert('Esta empresa/fornecedor já está cadastrada no ambiente.');
+                return;
+            }
+            ensureIndustryExists(nome);
+            saveState();
+            persistAndRefresh();
+            document.getElementById('adm-empresa-nome').value = '';
+            showToast('Empresa Cadastrada', `${nome} adicionada à rodada.`);
+        }
+
+        function sincronizarNomeEmpresaParceiro() {
+            const sel = document.getElementById('p-empresa-select');
+            const inp = document.getElementById('p-empresa-nome');
+            if (sel && sel.value) inp.value = sel.value;
+        }
+
+        <!-- ITEM 2 e ITEM 3: Cadastro Unificado com Representante, Datas e Verba de Participação -->
+        function cadastrarParceiroADM(e) {
+            e.preventDefault();
+            const empresa = document.getElementById('p-empresa-nome').value.trim();
+            const contato = document.getElementById('p-contato-nome').value.trim();
+            const funcao = document.getElementById('p-funcao').value.trim();
+            const whats = document.getElementById('p-whats').value.trim();
+            const email = document.getElementById('p-email').value.trim();
+            const uf = document.getElementById('p-uf').value.trim();
+            
+            // ITEM 3: Novos campos
+            const dataAdmissao = document.getElementById('p-data-admissao').value;
+            const dataVencimento = document.getElementById('p-data-vencimento').value;
+            const verbaParticipacao = document.getElementById('p-verba-participacao').value;
+
+            if (!empresa || !contato || !funcao || !whats || !email || !uf || !dataAdmissao || !dataVencimento || !verbaParticipacao) {
+                return alert('Preencha todos os campos obrigatórios do parceiro/representante.');
+            }
+
+            const modalidade = Array.from(document.getElementsByName('modalidade_parceria')).find(r => r.checked)?.value || 'Patrocinador do evento';
+            const fileInput = document.getElementById('p-logo-file');
+
+            const salvar = (logo) => {
+                const keyEmpresa = normalizeName(empresa);
+
+                // Cadastra/Atualiza no array de parceiros
+                const existingPartnerIndex = (state.parceiros || []).findIndex(p => normalizeName(p.empresa) === keyEmpresa);
+                const partnerObj = {
+                    id: existingPartnerIndex >= 0 ? state.parceiros[existingPartnerIndex].id : Date.now(),
+                    empresa,
+                    contato,
+                    funcao,
+                    whats,
+                    email,
+                    uf,
+                    dataAdmissao,
+                    dataVencimento,
+                    verbaParticipacao,
+                    modalidade,
+                    logo: logo || (existingPartnerIndex >= 0 ? state.parceiros[existingPartnerIndex].logo : '')
+                };
+
+                if (existingPartnerIndex >= 0) {
+                    state.parceiros[existingPartnerIndex] = partnerObj;
+                } else {
+                    state.parceiros.push(partnerObj);
+                }
+
+                // Sincroniza representante para disponibilizar no Portal do Lojista
+                const existingRepIndex = (state.representantes || []).findIndex(r => normalizeName(r.empresa) === keyEmpresa && normalizeName(r.nome) === normalizeName(contato));
+                const repObj = {
+                    id: existingRepIndex >= 0 ? state.representantes[existingRepIndex].id : Date.now() + 1,
+                    empresa,
+                    nome: contato,
+                    whats,
+                    uf,
+                    email
+                };
+                if (existingRepIndex >= 0) {
+                    state.representantes[existingRepIndex] = repObj;
+                } else {
+                    state.representantes.push(repObj);
+                }
+
+                ensureIndustryExists(empresa, logo || '');
+                saveState();
+                persistAndRefresh();
+                e.target.reset();
+                showToast('Cadastro Concluído', `${empresa} cadastrada/atualizada com sucesso!`);
+            };
+
+            if (fileInput?.files?.[0]) {
+                const reader = new FileReader();
+                reader.onload = ev => salvar(ev.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                salvar('');
+            }
+        }
+
+        function renderAdmParceirosTable() {
+            const tbody = document.getElementById('tbl-adm-parceiros-body');
+            if (!tbody) return;
+            if (!state.parceiros.length) {
+                tbody.innerHTML = '<tr><td colspan="9" class="p-3 text-center text-subtext">Nenhum parceiro ou representante cadastrado.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = state.parceiros.map(parc => {
+                const logo = parc.logo ? `<img src="${parc.logo}" class="w-8 h-8 object-contain rounded bg-white p-0.5 border border-slate-700">` : '<div class="w-8 h-8 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px]"><i class="fa-solid fa-building"></i></div>';
+                return `
+                    <tr class="hover:bg-slate-800/60 transition">
+                        <td class="p-2.5 text-center"><input type="checkbox" class="chk-parceiro-adm" value="${parc.id}"></td>
+                        <td class="p-2.5">${logo}</td>
+                        <td class="p-2.5 font-bold text-white-theme">${escapeHtml(parc.empresa)}</td>
+                        <td class="p-2.5">${escapeHtml(parc.contato)} <br><span class="text-[10px] text-subtext">${escapeHtml(parc.funcao)}</span></td>
+                        <td class="p-2.5"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i>${escapeHtml(parc.whats)}<br><span class="text-[10px] text-subtext">${escapeHtml(parc.email)} | <strong>${escapeHtml(parc.uf || '')}</strong></span></td>
+                        <td class="p-2.5 text-[11px]"><span class="text-emerald-400">Adm: ${escapeHtml(parc.dataAdmissao || '-')}</span><br><span class="text-amber-400">Venc: ${escapeHtml(parc.dataVencimento || '-')}</span></td>
+                        <td class="p-2.5 font-semibold text-blue-400">${escapeHtml(parc.verbaParticipacao || 'Mensal')}</td>
+                        <td class="p-2.5"><span class="bg-slate-800 text-subtext px-2 py-0.5 rounded text-[10px] border border-slate-700">${escapeHtml(parc.modalidade)}</span></td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="removerParceiroADM(${parc.id})" class="text-red-400 hover:text-red-300 p-1" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function removerParceiroADM(id) {
+            const parc = state.parceiros.find(p => Number(p.id) === Number(id));
+            if (!parc) return;
+            if (!confirm(`Remover o cadastro do parceiro "${parc.empresa}"?`)) return;
+            state.parceiros = state.parceiros.filter(p => Number(p.id) !== Number(id));
+            saveState();
+            persistAndRefresh();
+            showToast('Removido', 'Parceiro excluído com sucesso.');
+        }
+
+        function excluirParceirosSelecionadosADM() {
+            const ids = Array.from(document.querySelectorAll('.chk-parceiro-adm:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhum parceiro selecionado.');
+            if (!confirm(`Excluir os ${ids.length} parceiros selecionados?`)) return;
+            state.parceiros = state.parceiros.filter(p => !ids.includes(Number(p.id)));
+            saveState();
+            persistAndRefresh();
+            showToast('Exclusão Concluída', 'Parceiros removidos.');
+        }
+
+        /* ---------------------- Lojas ---------------------- */
+        function renderAdmLojasTable() {
+            const tbody = document.getElementById('tbl-adm-lojas-body');
+            if (!tbody) return;
+            const lojasOrdenadas = [...state.lojas].sort((a, b) => {
+                return (a.uf || '').localeCompare(b.uf || '') ||
+                       (a.municipio || '').localeCompare(b.municipio || '') ||
+                       (a.nome || '').localeCompare(b.nome || '');
+            });
+
+            tbody.innerHTML = lojasOrdenadas.map(loja => {
+                const nrVouchers = state.vouchers.filter(v => normalizeName(v.loja) === normalizeName(loja.nome)).length;
+                const nrCarimbos = state.checkins.filter(c => normalizeName(c.loja) === normalizeName(loja.nome)).length;
+                return `
+                    <tr class="hover:bg-slate-800/60 transition">
+                        <td class="p-2.5 text-center"><input type="checkbox" class="chk-loja-adm" value="${loja.id}"></td>
+                        <td class="p-2.5 font-bold text-white-theme">${escapeHtml(loja.uf || '-')}</td>
+                        <td class="p-2.5">${escapeHtml(loja.municipio || '-')}</td>
+                        <td class="p-2.5 font-bold text-white-theme">${escapeHtml(loja.nome)}</td>
+                        <td class="p-2.5 font-mono text-[11px]">${escapeHtml(loja.cnpj || '-')}</td>
+                        <td class="p-2.5 text-center">${escapeHtml(loja.nrLoja || '-')}</td>
+                        <td class="p-2.5 text-center"><span class="bg-slate-800 px-2 py-0.5 rounded text-[10px] border border-slate-700">${escapeHtml(loja.grupo || '-')}</span></td>
+                        <td class="p-2.5 text-center font-bold text-amber-500">${nrVouchers}</td>
+                        <td class="p-2.5 text-center font-bold text-emerald-400">${nrCarimbos}</td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="removerLojaADM(${loja.id})" class="text-red-400 hover:text-red-300 p-1" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function cadastrarNovaLojaADM() {
+            const nome = document.getElementById('adm-loja-nome').value.trim();
+            const cnpj = document.getElementById('adm-loja-cnpj').value.trim();
+            const uf = document.getElementById('adm-loja-uf').value.trim();
+            const grupo = document.getElementById('adm-loja-grupo').value.trim();
+            const nrLoja = document.getElementById('adm-loja-nr').value.trim();
+            const municipio = document.getElementById('adm-loja-municipio').value.trim();
+            const maps = document.getElementById('adm-loja-maps').value.trim();
+
+            if (!nome || !cnpj) return alert('Nome da loja e CNPJ são obrigatórios.');
+
+            state.lojas.push({
+                id: Date.now(),
+                nome, cnpj, uf, grupo, nrLoja, municipio, maps,
+                pass: '1234'
+            });
+
+            saveState();
+            persistAndRefresh();
+            document.getElementById('adm-loja-nome').value = '';
+            document.getElementById('adm-loja-cnpj').value = '';
+            document.getElementById('adm-loja-uf').value = '';
+            document.getElementById('adm-loja-grupo').value = '';
+            document.getElementById('adm-loja-nr').value = '';
+            document.getElementById('adm-loja-municipio').value = '';
+            document.getElementById('adm-loja-maps').value = '';
+            showToast('Loja Cadastrada', `${nome} cadastrada com sucesso.`);
+        }
+
+        function removerLojaADM(id) {
+            const loja = state.lojas.find(l => Number(l.id) === Number(id));
+            if (!loja) return;
+            if (!confirm(`Excluir a loja "${loja.nome}"?`)) return;
+            state.lojas = state.lojas.filter(l => Number(l.id) !== Number(id));
+            saveState();
+            persistAndRefresh();
+            showToast('Removido', 'Loja excluída do sistema.');
+        }
+
+        function excluirLojasSelecionadasADM() {
+            const ids = Array.from(document.querySelectorAll('.chk-loja-adm:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhuma loja selecionada.');
+            if (!confirm(`Excluir as ${ids.length} lojas selecionadas?`)) return;
+            state.lojas = state.lojas.filter(l => !ids.includes(Number(l.id)));
+            saveState();
+            persistAndRefresh();
+            showToast('Exclusão Concluída', 'Lojas selecionadas foram excluídas.');
+        }
+
+        /* ---------------------- Rodadas ---------------------- */
+        function renderRodadasTable() {
+            const tbodyDashboard = document.getElementById('table-rodadas-body');
+            const tbodyAdmin = document.getElementById('tbl-admin-rodadas-body');
+
+            const htmlDash = state.rodadas.map(r => `
+                <tr class="hover:bg-slate-800/50">
+                    <td class="p-1.5 font-medium">${escapeHtml(r.nome)}</td>
+                    <td class="p-1.5">${escapeHtml(r.horario)}</td>
+                    <td class="p-1.5 text-center"><span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">Ativa</span></td>
+                </tr>
+            `).join('');
+
+            if (tbodyDashboard) tbodyDashboard.innerHTML = htmlDash;
+
+            if (tbodyAdmin) {
+                tbodyAdmin.innerHTML = state.rodadas.map(r => `
+                    <tr>
+                        <td class="p-2.5 text-center"><input type="checkbox" class="chk-rodada" value="${r.id}"></td>
+                        <td class="p-2.5"><input type="date" value="${r.dia || '2026-09-09'}" onchange="atualizarRodadaCampo(${r.id}, 'dia', this.value)" class="bg-slate-800 border border-slate-700 rounded p-1 text-xs text-white-theme"></td>
+                        <td class="p-2.5"><input type="text" value="${escapeHtml(r.nome)}" onchange="atualizarRodadaCampo(${r.id}, 'nome', this.value)" class="bg-slate-800 border border-slate-700 rounded p-1 text-xs text-white-theme w-28"></td>
+                        <td class="p-2.5"><input type="text" value="${escapeHtml(r.horario)}" onchange="atualizarRodadaCampo(${r.id}, 'horario', this.value)" class="bg-slate-800 border border-slate-700 rounded p-1 text-xs text-white-theme w-32"></td>
+                        <td class="p-2.5 text-center"><span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded font-bold">Ativa</span></td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="removerRodada(${r.id})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function atualizarRodadaCampo(id, campo, valor) {
+            const r = state.rodadas.find(item => Number(item.id) === Number(id));
+            if (r) {
+                r[campo] = valor;
+                saveState();
+            }
+        }
+
+        function adicionarNovaRodada() {
+            const proximoNum = state.rodadas.length + 1;
+            state.rodadas.push({
+                id: Date.now(),
+                dia: '2026-09-09',
+                nome: `${proximoNum}ª Rodada`,
+                horario: '12:00 - 12:30'
+            });
+            saveState();
+            renderRodadasTable();
+        }
+
+        function removerRodada(id) {
+            state.rodadas = state.rodadas.filter(r => Number(r.id) !== Number(id));
+            saveState();
+            renderRodadasTable();
+        }
+
+        function excluirSelecionadosRodadas() {
+            const ids = Array.from(document.querySelectorAll('.chk-rodada:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhuma rodada selecionada.');
+            state.rodadas = state.rodadas.filter(r => !ids.includes(Number(r.id)));
+            saveState();
+            renderRodadasTable();
+        }
+
+        function salvarAgendaRodadas() {
+            saveState();
+            showToast('Agenda Salva', 'Horários das rodadas atualizados.');
+        }
+
+        /* ITEM 4: Upload e Exclusão de Catálogos PDF concentrados exclusivamente na área ADM */
+        function renderAdmCatalogosManager() {
+            const container = document.getElementById('adm-catalogos-gerenciador');
+            if (!container) return;
+
+            container.innerHTML = state.industrias.map(ind => {
+                const pdfInfo = ind.pdfUrl ?
+                    `<div class="text-[11px] text-emerald-400 flex items-center justify-between gap-1 mt-1 bg-emerald-950/40 p-1.5 rounded border border-emerald-800">
+                        <span class="truncate" title="${escapeHtml(ind.pdfNome)}"><i class="fa-solid fa-file-pdf mr-1"></i>${escapeHtml(ind.pdfNome)}</span>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button onclick="visualizarPdfBlob('${ind.id}')" class="text-blue-400 hover:text-blue-300 p-1" title="Visualizar PDF"><i class="fa-solid fa-eye"></i></button>
+                            <button onclick="removerPdfIndustria(${ind.id})" class="text-red-400 hover:text-red-300 p-1" title="Remover PDF"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                     </div>` :
+                    `<div class="text-[10px] text-subtext mt-1">Nenhum catálogo em PDF cadastrado.</div>`;
+
+                return `
+                    <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs font-bold text-white-theme flex items-center gap-2">
+                                    <input type="checkbox" class="chk-empresa-pdf rounded bg-slate-900 border-slate-700" value="${ind.id}">
+                                    ${escapeHtml(ind.nome)}
+                                </label>
+                                <button onclick="removerEmpresaCompleta(${ind.id})" class="text-red-400 hover:text-red-300 text-xs font-bold flex items-center gap-1 bg-red-950/40 px-2 py-0.5 rounded border border-red-800/50" title="Excluir empresa inteira">
+                                    <i class="fa-solid fa-trash"></i> Excluir Empresa
+                                </button>
+                            </div>
+                            ${pdfInfo}
+                        </div>
+                        <div class="mt-2.5 pt-2 border-t border-slate-700 flex items-center gap-2">
+                            <input type="file" id="input-pdf-${ind.id}" accept="application/pdf" class="bg-slate-900 border border-slate-700 rounded p-1 text-[10px] text-white-theme flex-1">
+                            <button onclick="uploadPdfIndustria(${ind.id})" class="bg-[#f26522] hover:bg-[#d5521b] text-white font-bold px-2.5 py-1 rounded text-xs transition">
+                                <i class="fa-solid fa-upload"></i> Salvar PDF
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function uploadPdfIndustria(id) {
+            const input = document.getElementById(`input-pdf-${id}`);
+            if (!input || !input.files || !input.files[0]) return alert('Selecione um arquivo PDF.');
+            const file = input.files[0];
+            if (file.type !== 'application/pdf') return alert('O arquivo precisa estar no formato PDF.');
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                const ind = state.industrias.find(i => Number(i.id) === Number(id));
+                if (ind) {
+                    ind.pdfUrl = e.target.result;
+                    ind.pdfNome = file.name;
+                    ind.dataUpload = new Date().toISOString();
+                    saveState();
+                    persistAndRefresh();
+                    showToast('Upload Concluído', `Catálogo enviado para ${ind.nome}.`);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removerPdfIndustria(id) {
+            const ind = state.industrias.find(i => Number(i.id) === Number(id));
+            if (!ind) return;
+            if (!confirm(`Remover o PDF do catálogo da ${ind.nome}?`)) return;
+            ind.pdfUrl = '';
+            ind.pdfNome = '';
+            ind.dataUpload = '';
+            saveState();
+            persistAndRefresh();
+            showToast('PDF Removido', 'Arquivo de catálogo excluído.');
+        }
+
+        function visualizarPdfBlob(id) {
+            const ind = state.industrias.find(i => String(i.id) === String(id));
+            if (!ind || !ind.pdfUrl) return alert('PDF não disponível.');
+
+            try {
+                const arr = ind.pdfUrl.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while (n--) { u8arr[n] = bstr.charCodeAt(n); }
+                const blob = new Blob([u8arr], { type: mime });
+                const blobUrl = URL.createObjectURL(blob);
+                blobUrlsAtivos.push(blobUrl);
+                window.open(blobUrl, '_blank');
+            } catch (err) {
+                console.error(err);
+                alert('Não foi possível abrir o PDF.');
+            }
+        }
+
+        /* ---------------------- Selects ---------------------- */
+        function populateSelects() {
+            const fornecedores = getUniqueFornecedorNames();
+            const indSelect = document.getElementById('v-industria');
+            const masterSelect = document.getElementById('p-expositor-master');
+            const pIndSelect = document.getElementById('p-industria');
+            const pEmpresaSelect = document.getElementById('p-empresa-select');
+
+            if (indSelect) {
+                const cur = indSelect.value;
+                indSelect.innerHTML = '<option value="">Selecione a Empresa...</option>' +
+                    fornecedores.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                indSelect.value = cur;
+            }
+
+            if (masterSelect) {
+                const cur = masterSelect.value;
+                masterSelect.innerHTML = '<option value="">Selecione sua empresa (Expositor)...</option>' +
+                    fornecedores.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                masterSelect.value = cur;
+            }
+
+            if (pIndSelect) {
+                const cur = pIndSelect.value;
+                pIndSelect.innerHTML = '<option value="">Selecione a Indústria...</option>' +
+                    fornecedores.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                pIndSelect.value = cur;
+            }
+
+            if (pEmpresaSelect) {
+                const cur = pEmpresaSelect.value;
+                pEmpresaSelect.innerHTML = '<option value="">Selecione ou digite abaixo...</option>' +
+                    fornecedores.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                pEmpresaSelect.value = cur;
+            }
+
+            const lojaSelect = document.getElementById('v-loja');
+            const pLojaSelect = document.getElementById('p-loja');
+            const loginLojistaSelect = document.getElementById('login-lojista-select');
+
+            const lojasSorted = [...state.lojas].sort((a,b) => a.nome.localeCompare(b.nome));
+
+            const optionsLojas = '<option value="">Selecione a Loja...</option>' +
+                lojasSorted.map(l => `<option value="${escapeHtml(l.nome)}">${escapeHtml(l.nome)} (${escapeHtml(l.uf || '')})</option>`).join('');
+
+            if (lojaSelect) {
+                const cur = lojaSelect.value;
+                lojaSelect.innerHTML = optionsLojas;
+                lojaSelect.value = cur;
+            }
+
+            if (pLojaSelect) {
+                const cur = pLojaSelect.value;
+                pLojaSelect.innerHTML = optionsLojas;
+                pLojaSelect.value = cur;
+            }
+
+            if (loginLojistaSelect) {
+                const cur = loginLojistaSelect.value;
+                loginLojistaSelect.innerHTML = '<option value="">Selecione sua Loja...</option>' +
+                    lojasSorted.map(l => `<option value="${escapeHtml(l.nome)}">${escapeHtml(l.nome)}</option>`).join('');
+                loginLojistaSelect.value = cur;
+            }
+        }
+
+        /* ---------------------- Form Atendimento / Voucher ---------------------- */
+        function toggleVoucherValue() {
+            const cond = document.getElementById('v-condicao').value;
+            const containerValor = document.getElementById('container-valor');
+            const containerRejeicao = document.getElementById('container-rejeicao');
+            const inputValor = document.getElementById('v-valor');
+            const inputVouchersQtd = document.getElementById('v-vouchers-qtd');
+
+            if (cond === 'NAO_FECHOU') {
+                containerValor.classList.add('hidden');
+                containerRejeicao.classList.remove('hidden');
+                if (inputValor) inputValor.value = '0';
+                if (inputVouchersQtd) inputVouchersQtd.value = '0 und.';
+            } else {
+                containerValor.classList.remove('hidden');
+                containerRejeicao.classList.add('hidden');
+                if (cond === 'FECHOU_ANTECIPADO') {
+                    if (inputVouchersQtd) inputVouchersQtd.value = '2 und.';
+                } else {
+                    if (inputVouchersQtd) inputVouchersQtd.value = '1 und.';
+                }
+            }
+        }
+
+        <!-- ITEM 6: Correção no funcionamento da opção "Fixar para múltiplos atendimentos" -->
+        function toggleFixarVoucherExpositor() {
+            const chk = document.getElementById('v-chk-fixar');
+            state.fixarVoucherExpositor = chk ? chk.checked : false;
+            saveState();
+        }
+
+        <!-- ITEM 7: Nome atualizado para "Registrar Voucher / Atendimento na Loja" e mensagem de alerta corrigida -->
+        function handleVoucherSubmit(e) {
+            e.preventDefault();
+            const industria = document.getElementById('v-industria').value;
+            const loja = document.getElementById('v-loja').value;
+            const cond = document.getElementById('v-condicao').value;
+            const valorInput = document.getElementById('v-valor').value;
+
+            if (!industria || !loja) return alert('Selecione a indústria e a loja.');
+
+            let valor = parseFloat(valorInput) || 0;
+            let qtdVouchers = 0;
+
+            if (cond === 'FECHOU_ANTECIPADO') qtdVouchers = 2;
+            else if (cond === 'FECHOU_RODADA' || cond === 'FECHOU_LOJA') qtdVouchers = 1;
+            else valor = 0;
+
+            let motivosArr = [];
+            if (cond === 'NAO_FECHOU') {
+                const checkboxes = document.querySelectorAll('input[name="motivo_rejeicao"]:checked');
+                checkboxes.forEach(cb => {
+                    motivosArr.push(cb.value);
+                    if (state.rejeicoes[cb.value] !== undefined) state.rejeicoes[cb.value]++;
+                    else state.rejeicoes[cb.value] = 1;
+                });
+            }
+
+            const idAtendimento = Date.now();
+            const timestamp = nowIsoLike();
+
+            const at = {
+                id: idAtendimento,
+                timestamp,
+                industria,
+                loja,
+                condicao: cond,
+                valor,
+                vouchersQtd: qtdVouchers,
+                motivos: motivosArr,
+                nps: null
+            };
+
+            state.atendimentos.push(at);
+
+            for (let i = 0; i < qtdVouchers; i++) {
+                const numSorte = String(Math.floor(1000 + Math.random() * 9000));
+                state.vouchers.push({
+                    id: Date.now() + i + Math.floor(Math.random() * 100),
+                    atendimentoId: idAtendimento,
+                    numero: numSorte,
+                    loja,
+                    industria,
+                    valor,
+                    timestamp
+                });
+            }
+
+            saveState();
+            persistAndRefresh();
+
+            // Reseta formulário respeitando o estado do checkbox de Fixar Expositor
+            if (!state.fixarVoucherExpositor) {
+                document.getElementById('v-industria').value = '';
+            }
+            document.getElementById('v-loja').value = '';
+            document.getElementById('v-valor').value = '';
+            document.querySelectorAll('input[name="motivo_rejeicao"]').forEach(cb => cb.checked = false);
+            toggleVoucherValue();
+
+            // ITEM 7: Mensagem solicitada
+            alert('Sua venda a loja foi registrada, se for uma Rodada de Negócios, valide a visita do lojista no estande do expositor no Passaporte.');
+        }
+
+        /* ---------------------- Passaporte ---------------------- */
+        function toggleFixarExpositor() {
+            const chk = document.getElementById('chk-fixar-expositor');
+            state.fixarExpositor = chk ? chk.checked : false;
+            saveState();
+        }
+
+        function aplicarFiltroMasterExpositor() {
+            const exp = document.getElementById('p-expositor-master').value;
+            const selectPInd = document.getElementById('p-industria');
+            if (selectPInd && exp) selectPInd.value = exp;
+        }
+
+        function registrarCheckinPassaporte() {
+            const loja = document.getElementById('p-loja').value;
+            const industria = document.getElementById('p-industria').value || document.getElementById('p-expositor-master').value;
+
+            if (!loja || !industria) return alert('Selecione a loja e o estande da indústria.');
+
+            state.checkins.unshift({
+                id: Date.now(),
+                loja,
+                industria,
+                timestamp: nowIsoLike()
+            });
+
+            saveState();
+            persistAndRefresh();
+
+            if (!state.fixarExpositor) {
+                document.getElementById('p-expositor-master').value = '';
+                document.getElementById('p-industria').value = '';
+            }
+            document.getElementById('p-loja').value = '';
+
+            showToast('Passaporte Carimbado', `Visita registrada para ${loja}.`);
+        }
+
+        function renderCheckinsList() {
+            const ul = document.getElementById('list-checkins');
+            if (!ul) return;
+            if (!state.checkins.length) {
+                ul.innerHTML = '<li class="p-2 text-subtext">Nenhum carimbo registrado.</li>';
+                return;
+            }
+            ul.innerHTML = state.checkins.slice(0, 15).map(c => `
+                <li class="p-2 flex justify-between items-center hover:bg-slate-800/40">
+                    <div>
+                        <strong class="text-white-theme">${escapeHtml(c.loja)}</strong> visitou <span class="text-[#f26522] font-semibold">${escapeHtml(c.industria)}</span>
+                    </div>
+                    <span class="text-[10px] text-subtext">${formatDateTimePt(c.timestamp)}</span>
+                </li>
+            `).join('');
+        }
+
+        /* ---------------------- Dashboard Metrics & Top 5 ---------------------- */
+        function toggleAnonimizarExpositores() {
+            state.anonimizarExpositores = !state.anonimizarExpositores;
+            saveState();
+            renderTopList();
+        }
+
+        function renderTopList() {
+            const totalGeral = state.atendimentos.reduce((acc, a) => acc + (a.valor || 0), 0);
+            const totalReunioes = state.atendimentos.length;
+            const reunioesConvertidas = state.atendimentos.filter(a => (a.valor || 0) > 0).length;
+            const taxaConversao = totalReunioes > 0 ? (reunioesConvertidas / totalReunioes) * 100 : 0;
+            const mediaLoja = state.lojas.length > 0 ? totalGeral / state.lojas.length : 0;
+
+            const kpiTotalGeral = document.getElementById('kpi-total-geral');
+            const kpiVolIndustrias = document.getElementById('kpi-vol-industrias');
+            const kpiMediaLoja = document.getElementById('kpi-media-loja');
+            const kpiTotalReunioes = document.getElementById('kpi-total-reunioes');
+            const kpiReunioesConvertidas = document.getElementById('kpi-reunioes-convertidas');
+            const kpiTaxaConversao = document.getElementById('kpi-taxa-conversao');
+
+            if (kpiTotalGeral) kpiTotalGeral.innerText = formatMoney(totalGeral);
+            if (kpiVolIndustrias) kpiVolIndustrias.innerText = formatMoney(totalGeral);
+            if (kpiMediaLoja) kpiMediaLoja.innerText = formatMoney(mediaLoja);
+            if (kpiTotalReunioes) kpiTotalReunioes.innerText = totalReunioes;
+            if (kpiReunioesConvertidas) kpiReunioesConvertidas.innerText = reunioesConvertidas;
+            if (kpiTaxaConversao) kpiTaxaConversao.innerText = `${taxaConversao.toFixed(2)}%`;
+
+            // Vendas por Indústria
+            const indMap = {};
+            getUniqueFornecedorNames().forEach(n => indMap[n] = { total: 0, count: 0 });
+            state.atendimentos.forEach(a => {
+                if (!indMap[a.industria]) indMap[a.industria] = { total: 0, count: 0 };
+                indMap[a.industria].total += (a.valor || 0);
+                if ((a.valor || 0) > 0) indMap[a.industria].count++;
+            });
+
+            const sortedInds = Object.entries(indMap).sort((a,b) => b[1].total - a[1].total);
+            const top5Inds = sortedInds.slice(0, 5);
+            const volTop5Inds = top5Inds.reduce((acc, curr) => acc + curr[1].total, 0);
+            const shareTop5Inds = totalGeral > 0 ? (volTop5Inds / totalGeral) * 100 : 0;
+
+            const lblShareTop5Ind = document.getElementById('share-top5-industrias');
+            if (lblShareTop5Ind) lblShareTop5Ind.innerText = `${shareTop5Inds.toFixed(2)}%`;
+
+            const containerTop5Ind = document.getElementById('top5-industrias-list');
+            if (containerTop5Ind) {
+                containerTop5Ind.innerHTML = top5Inds.map(([nome, dados], idx) => {
+                    const pct = totalGeral > 0 ? (dados.total / totalGeral) * 100 : 0;
+                    const displayName = state.anonimizarExpositores ? `Expositor #${idx + 1}` : nome;
+                    return `
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="font-bold text-white-theme">${idx + 1}. ${escapeHtml(displayName)}</span>
+                                <span class="text-amber-500 font-bold">${formatMoney(dados.total)} (${pct.toFixed(1)}%)</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: ${Math.min(pct, 100)}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Tabela Desempenho Geral Expositores
+            const tbodyExp = document.getElementById('expositores-table-body');
+            const lblTotalExpQtd = document.getElementById('lbl-total-expositores-qtd');
+            if (lblTotalExpQtd) lblTotalExpQtd.innerText = `${sortedInds.length} Indústrias`;
+
+            if (tbodyExp) {
+                tbodyExp.innerHTML = sortedInds.map(([nome, dados], idx) => {
+                    const pct = totalGeral > 0 ? (dados.total / totalGeral) * 100 : 0;
+                    const displayName = state.anonimizarExpositores ? `Expositor #${idx + 1}` : nome;
+                    return `
+                        <tr class="hover:bg-slate-800/40">
+                            <td class="p-1.5 font-medium text-white-theme">${escapeHtml(displayName)}</td>
+                            <td class="p-1.5 text-center">${dados.count}</td>
+                            <td class="p-1.5 text-right font-bold text-amber-500">${formatMoney(dados.total)}</td>
+                            <td class="p-1.5 text-right">${pct.toFixed(1)}%</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Vendas por Loja
+            const lojaMap = {};
+            state.lojas.forEach(l => lojaMap[l.nome] = 0);
+            state.atendimentos.forEach(a => {
+                if (lojaMap[a.loja] !== undefined) lojaMap[a.loja] += (a.valor || 0);
+                else lojaMap[a.loja] = (a.valor || 0);
+            });
+
+            const sortedLojas = Object.entries(lojaMap).sort((a,b) => b[1] - a[1]);
+            const top5Lojas = sortedLojas.slice(0, 5);
+            const volTop5Lojas = top5Lojas.reduce((acc, curr) => acc + curr[1], 0);
+            const shareTop5Lojas = totalGeral > 0 ? (volTop5Lojas / totalGeral) * 100 : 0;
+
+            const lblShareTop5Lojas = document.getElementById('share-top5-lojas');
+            if (lblShareTop5Lojas) lblShareTop5Lojas.innerText = `${shareTop5Lojas.toFixed(2)}%`;
+
+            const containerTop5Lojas = document.getElementById('top5-lojas-list');
+            if (containerTop5Lojas) {
+                containerTop5Lojas.innerHTML = top5Lojas.map(([nome, vol], idx) => {
+                    const pct = totalGeral > 0 ? (vol / totalGeral) * 100 : 0;
+                    return `
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="font-bold text-white-theme">${idx + 1}. ${escapeHtml(nome)}</span>
+                                <span class="text-emerald-400 font-bold">${formatMoney(vol)} (${pct.toFixed(1)}%)</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: ${Math.min(pct, 100)}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            updateRejectionChart();
+        }
+
+        <!-- ITEM 8: Motivos de Não Compra e Gráfico Chart.js Corrigidos -->
+        function initRejectionChart() {
+            const ctx = document.getElementById('rejectionChart');
+            if (!ctx) return;
+
+            const dataValues = [
+                state.rejeicoes['Preço/Prazo'] || 0,
+                state.rejeicoes['Mix Indisponível'] || 0,
+                state.rejeicoes['Estoque Alto'] || 0,
+                state.rejeicoes['Pós-Evento'] || 0
+            ];
+
+            rejectionChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Preço/Prazo', 'Mix Indisponível', 'Estoque Alto', 'Pós-Evento'],
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6'],
+                        borderWidth: 2,
+                        borderColor: '#1e1e1e'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: '#d1d5db', font: { family: 'Poppins', size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateRejectionChart() {
+            if (!rejectionChartInstance) return;
+            rejectionChartInstance.data.datasets[0].data = [
+                state.rejeicoes['Preço/Prazo'] || 0,
+                state.rejeicoes['Mix Indisponível'] || 0,
+                state.rejeicoes['Estoque Alto'] || 0,
+                state.rejeicoes['Pós-Evento'] || 0
+            ];
+            rejectionChartInstance.update();
+        }
+
+        /* ---------------------- Repositório de Vouchers ---------------------- */
+        function renderVouchersList() {
+            const tbody = document.getElementById('tbl-vouchers-gerados-body');
+            const lblTotal = document.getElementById('lbl-total-vouchers-gerados');
+
+            if (lblTotal) lblTotal.innerText = `${state.vouchers.length} Cupons`;
+
+            if (!tbody) return;
+            if (!state.vouchers.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-subtext">Nenhum voucher gerado até o momento.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = state.vouchers.map(v => `
+                <tr class="hover:bg-slate-800/50 transition">
+                    <td class="p-3 text-center"><input type="checkbox" class="chk-voucher" value="${v.id}"></td>
+                    <td class="p-3 font-mono font-bold text-amber-500">#${escapeHtml(v.numero)}</td>
+                    <td class="p-3 font-bold text-white-theme">${escapeHtml(v.loja)}</td>
+                    <td class="p-3">${escapeHtml(v.industria)}</td>
+                    <td class="p-3 text-right font-semibold text-emerald-400">${formatMoney(v.valor)}</td>
+                    <td class="p-3 text-center text-subtext">${formatDateTimePt(v.timestamp)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function excluirSelecionadosVouchers() {
+            const ids = Array.from(document.querySelectorAll('.chk-voucher:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhum voucher selecionado.');
+            if (!confirm(`Excluir os ${ids.length} vouchers selecionados?`)) return;
+
+            state.vouchers = state.vouchers.filter(v => !ids.includes(Number(v.id)));
+            saveState();
+            persistAndRefresh();
+            showToast('Exclusão Concluída', 'Vouchers selecionados foram removidos.');
+        }
+
+        /* ---------------------- Sorteio ---------------------- */
+        function realizarSorteio() {
+            if (!state.vouchers.length) return alert('Não há vouchers ativos cadastrados para realizar o sorteio.');
+
+            const indexGanhador = Math.floor(Math.random() * state.vouchers.length);
+            const voucherGanhador = state.vouchers[indexGanhador];
+
+            const displayNum = document.getElementById('display-numero-sorte');
+            const displayLoja = document.getElementById('display-loja-sorteada');
+
+            let roletas = 0;
+            const interval = setInterval(() => {
+                const tempNum = String(Math.floor(1000 + Math.random() * 9000));
+                if (displayNum) displayNum.innerText = `#${tempNum}`;
+                roletas++;
+
+                if (roletas > 25) {
+                    clearInterval(interval);
+                    if (displayNum) displayNum.innerText = `#${voucherGanhador.numero}`;
+                    if (displayLoja) displayLoja.innerText = `GANHADOR: ${voucherGanhador.loja} (Indústria: ${voucherGanhador.industria})`;
+
+                    state.sorteiosRealizados.unshift({
+                        id: Date.now(),
+                        numero: voucherGanhador.numero,
+                        loja: voucherGanhador.loja,
+                        industria: voucherGanhador.industria,
+                        valor: voucherGanhador.valor,
+                        timestamp: nowIsoLike()
+                    });
+
+                    state.vouchers = state.vouchers.filter(v => v.id !== voucherGanhador.id);
+                    saveState();
+                    persistAndRefresh();
+                    showToast('Sorteio Concluído!', `Ganhador: ${voucherGanhador.loja}`);
+                }
+            }, 80);
+        }
+
+        function renderSorteiosRealizados() {
+            const tbody = document.getElementById('tbl-sorteios-realizados');
+            if (!tbody) return;
+            if (!state.sorteiosRealizados.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-subtext">Nenhum ganhador registrado ainda.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = state.sorteiosRealizados.map(s => `
+                <tr class="hover:bg-slate-800/50">
+                    <td class="p-3 font-mono font-bold text-amber-500">#${escapeHtml(s.numero)}</td>
+                    <td class="p-3 font-bold text-white-theme">${escapeHtml(s.loja)}</td>
+                    <td class="p-3">${escapeHtml(s.industria)}</td>
+                    <td class="p-3 text-right font-semibold text-emerald-400">${formatMoney(s.valor)}</td>
+                    <td class="p-3 text-center text-subtext">${new Date(s.timestamp).toLocaleDateString('pt-BR')}</td>
+                    <td class="p-3 text-center text-subtext">${new Date(s.timestamp).toLocaleTimeString('pt-BR')}</td>
+                </tr>
+            `).join('');
+        }
+
+        /* ---------------------- Portal Lojista ---------------------- */
+        function autenticarLojista(e) {
+            e.preventDefault();
+            const lojaNome = document.getElementById('login-lojista-select').value;
+            const pass = document.getElementById('login-lojista-pass').value;
+
+            if (!lojaNome) return alert('Selecione uma loja.');
+
+            const loja = state.lojas.find(l => l.nome === lojaNome);
+            if (pass === PORTAL_PARCEIRO_SENHA || (loja && pass === loja.pass)) {
+                state.authenticated.lojista = true;
+                state.loggedLojista = lojaNome;
+                saveState();
+
+                document.getElementById('lojista-auth-screen').classList.add('hidden');
+                document.getElementById('lojista-dashboard-screen').classList.remove('hidden');
+
+                renderLojistaPortalData();
+                showToast('Acesso Permitido', `Bem-vindo, ${lojaNome}!`);
+            } else {
+                alert('Senha incorreta.');
+            }
+        }
+
+        function logoutLojista() {
+            state.authenticated.lojista = false;
+            state.loggedLojista = null;
+            saveState();
+
+            document.getElementById('lojista-dashboard-screen').classList.add('hidden');
+            document.getElementById('lojista-auth-screen').classList.remove('hidden');
+            document.getElementById('login-lojista-pass').value = '';
+        }
+
+        function renderLojistaPortalData() {
+            const lojaNome = state.loggedLojista;
+            if (!lojaNome) return;
+
+            const lblNome = document.getElementById('lbl-nome-loja-logada');
+            if (lblNome) lblNome.innerText = lojaNome;
+
+            const lojaObj = state.lojas.find(l => l.nome === lojaNome);
+
+            // Base Cadastral
+            const containerBase = document.getElementById('lojista-base-cadastral');
+            if (containerBase && lojaObj) {
+                containerBase.innerHTML = `
+                    <div class="bg-slate-800 p-3 rounded border border-slate-700"><span class="text-[10px] text-subtext block uppercase font-bold">CNPJ</span><span class="font-mono text-xs text-white-theme font-bold">${escapeHtml(lojaObj.cnpj || '-')}</span></div>
+                    <div class="bg-slate-800 p-3 rounded border border-slate-700"><span class="text-[10px] text-subtext block uppercase font-bold">UF / Município</span><span class="text-xs text-white-theme font-bold">${escapeHtml(lojaObj.uf || '-')} / ${escapeHtml(lojaObj.municipio || '-')}</span></div>
+                    <div class="bg-slate-800 p-3 rounded border border-slate-700"><span class="text-[10px] text-subtext block uppercase font-bold">Grupo de Compras</span><span class="text-xs text-amber-400 font-bold">${escapeHtml(lojaObj.grupo || '-')}</span></div>
+                    <div class="bg-slate-800 p-3 rounded border border-slate-700"><span class="text-[10px] text-subtext block uppercase font-bold">Número da Loja</span><span class="text-xs text-emerald-400 font-bold">${escapeHtml(lojaObj.nrLoja || '-')}</span></div>
+                `;
+            }
+
+            // Atendimentos da Loja
+            const meusAtendimentos = state.atendimentos.filter(a => normalizeName(a.loja) === normalizeName(lojaNome));
+            const totalComprado = meusAtendimentos.reduce((acc, a) => acc + (a.valor || 0), 0);
+            const totalVouchers = state.vouchers.filter(v => normalizeName(v.loja) === normalizeName(lojaNome)).length;
+            const mediaCompra = meusAtendimentos.length > 0 ? totalComprado / meusAtendimentos.length : 0;
+
+            const lblComprado = document.getElementById('lojista-total-comprado');
+            const lblVouchers = document.getElementById('lojista-total-vouchers');
+            const lblMedia = document.getElementById('lojista-media-compra');
+
+            if (lblComprado) lblComprado.innerText = formatMoney(totalComprado);
+            if (lblVouchers) lblVouchers.innerText = `${totalVouchers} Vouchers`;
+            if (lblMedia) lblMedia.innerText = formatMoney(mediaCompra);
+
+            // ITEM 2: Representantes Comerciais Disponibilizados para Acesso do Lojista
+            const containerReps = document.getElementById('lojista-representantes-grid');
+            if (containerReps) {
+                if (!state.parceiros.length && !state.representantes.length) {
+                    containerReps.innerHTML = '<div class="col-span-2 text-xs text-subtext">Nenhum contato de representante cadastrado.</div>';
+                } else {
+                    const todosRepsMap = new Map();
+                    // Inclui parceiros e representantes cadastrados
+                    state.parceiros.forEach(p => {
+                        todosRepsMap.set(normalizeName(p.empresa + p.contato), {
+                            empresa: p.empresa,
+                            nome: p.contato,
+                            whats: p.whats,
+                            email: p.email,
+                            uf: p.uf || 'PE',
+                            logo: p.logo
+                        });
+                    });
+                    state.representantes.forEach(r => {
+                        const key = normalizeName(r.empresa + r.nome);
+                        if (!todosRepsMap.has(key)) {
+                            todosRepsMap.set(key, {
+                                empresa: r.empresa,
+                                nome: r.nome,
+                                whats: r.whats,
+                                email: r.email,
+                                uf: r.uf || 'PE',
+                                logo: ''
+                            });
+                        }
+                    });
+
+                    containerReps.innerHTML = Array.from(todosRepsMap.values()).map(r => {
+                        const msgWhats = encodeURIComponent(`Olá ${r.nome}, sou da loja ${lojaNome} e gostaria de tirar dúvidas sobre produtos/pedidos.`);
+                        const logoImg = r.logo ? `<img src="${r.logo}" class="w-10 h-10 object-contain rounded bg-white p-0.5 border border-slate-700">` : `<div class="w-10 h-10 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-subtext"><i class="fa-solid fa-user-tie"></i></div>`;
+                        return `
+                            <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    ${logoImg}
+                                    <div>
+                                        <h4 class="text-xs font-bold text-white-theme">${escapeHtml(r.nome)}</h4>
+                                        <p class="text-[11px] text-amber-500 font-semibold">${escapeHtml(r.empresa)} <span class="text-[10px] text-subtext">(${escapeHtml(r.uf)})</span></p>
+                                        <p class="text-[10px] text-subtext">${escapeHtml(r.email)}</p>
+                                    </div>
+                                </div>
+                                <a href="https://wa.me/55${digitsOnly(r.whats)}?text=${msgWhats}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shrink-0 transition">
+                                    <i class="fa-brands fa-whatsapp"></i> Contatar
+                                </a>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            // Fornecedor Select para solicitação de visita
+            const selectFornecedor = document.getElementById('visita-fornecedor-select');
+            if (selectFornecedor) {
+                const fornecedores = getUniqueFornecedorNames();
+                selectFornecedor.innerHTML = '<option value="">Selecione o Fornecedor...</option>' +
+                    fornecedores.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+            }
+
+            // Tabela Atendimentos e NPS
+            const tbodyNPS = document.getElementById('tbl-lojista-nps-atendimentos');
+            if (tbodyNPS) {
+                if (!meusAtendimentos.length) {
+                    tbodyNPS.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-subtext">Nenhum atendimento registrado para sua loja.</td></tr>';
+                } else {
+                    tbodyNPS.innerHTML = meusAtendimentos.map(a => {
+                        const npsDisplay = a.nps ?
+                            `<span class="bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded">Nota: ${a.nps}/10</span>` :
+                            `<div class="flex items-center justify-center gap-1">
+                                <select id="nps-sel-${a.id}" class="bg-slate-800 border border-slate-700 text-xs rounded p-1 text-white-theme">
+                                    ${[10,9,8,7,6,5,4,3,2,1].map(n => `<option value="${n}">${n}</option>`).join('')}
+                                </select>
+                                <button onclick="salvarNpsAtendimento(${a.id})" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-2 py-1 rounded text-xs">Avaliar</button>
+                             </div>`;
+
+                        return `
+                            <tr>
+                                <td class="p-3 text-subtext">${formatDateTimePt(a.timestamp)}</td>
+                                <td class="p-3 font-bold text-white-theme">${escapeHtml(a.industria)}</td>
+                                <td class="p-3 text-right font-bold text-emerald-400">${formatMoney(a.valor)}</td>
+                                <td class="p-3 text-center">${npsDisplay}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            }
+
+            // ITEM 4: Catálogos de Campanhas dos Fornecedores visíveis no Portal Lojista
+            const containerCatalogos = document.getElementById('lojista-catalogos-list');
+            if (containerCatalogos) {
+                const comPdf = state.industrias.filter(i => i.pdfUrl);
+                if (!comPdf.length) {
+                    containerCatalogos.innerHTML = '<div class="col-span-2 text-xs text-subtext p-3 bg-slate-800 rounded">Nenhum catálogo em PDF cadastrado pelos fornecedores até o momento.</div>';
+                } else {
+                    containerCatalogos.innerHTML = comPdf.map(ind => `
+                        <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-950/60 border border-red-800/50 flex items-center justify-center text-red-400 font-bold text-xl"><i class="fa-solid fa-file-pdf"></i></div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-white-theme">${escapeHtml(ind.nome)}</h4>
+                                    <p class="text-[10px] text-subtext truncate max-w-[180px]">${escapeHtml(ind.pdfNome)}</p>
+                                </div>
+                            </div>
+                            <button onclick="visualizarPdfBlob('${ind.id}')" class="bg-[#f26522] hover:bg-[#d5521b] text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 transition">
+                                <i class="fa-solid fa-eye"></i> Visualizar
+                            </button>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Tabela Suas Compras
+            const tbodyAtend = document.getElementById('tbl-lojista-atendimentos');
+            if (tbodyAtend) {
+                if (!meusAtendimentos.length) {
+                    tbodyAtend.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-subtext">Sem compras ou reuniões registradas.</td></tr>';
+                } else {
+                    tbodyAtend.innerHTML = meusAtendimentos.map(a => `
+                        <tr>
+                            <td class="p-3 font-bold text-white-theme">${escapeHtml(a.industria)}</td>
+                            <td class="p-3"><span class="bg-slate-800 px-2 py-0.5 rounded text-[10px] text-subtext">${escapeHtml(a.condicao)}</span></td>
+                            <td class="p-3 text-right font-bold text-emerald-400">${formatMoney(a.valor)}</td>
+                            <td class="p-3 text-center font-bold text-amber-500">${a.vouchersQtd}</td>
+                            <td class="p-3 text-right font-semibold">${formatMoney(a.valor)}</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // Tabela Check-ins Passaporte
+            const tbodyPass = document.getElementById('tbl-lojista-passaporte');
+            if (tbodyPass) {
+                const meusCheckins = state.checkins.filter(c => normalizeName(c.loja) === normalizeName(lojaNome));
+                if (!meusCheckins.length) {
+                    tbodyPass.innerHTML = '<tr><td colspan="3" class="p-3 text-center text-subtext">Nenhum carimbo de passaporte registrado para sua loja.</td></tr>';
+                } else {
+                    tbodyPass.innerHTML = meusCheckins.map(c => `
+                        <tr>
+                            <td class="p-3 font-bold text-white-theme">${escapeHtml(c.industria)}</td>
+                            <td class="p-3 text-subtext">${formatDateTimePt(c.timestamp)}</td>
+                            <td class="p-3 text-center"><span class="bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded"><i class="fa-solid fa-check mr-1"></i> Carimbado</span></td>
+                        </tr>
+                    `).join('');
+                }
+            }
+        }
+
+        function salvarNpsAtendimento(idAtendimento) {
+            const sel = document.getElementById(`nps-sel-${idAtendimento}`);
+            if (!sel) return;
+            const nota = parseInt(sel.value);
+            const at = state.atendimentos.find(a => Number(a.id) === Number(idAtendimento));
+            if (at) {
+                at.nps = nota;
+                saveState();
+                renderLojistaPortalData();
+                showToast('Avaliação Salva', `Obrigado por avaliar o atendimento com nota ${nota}!`);
+            }
+        }
+
+        function solicitarVisitaRepresentante() {
+            const forn = document.getElementById('visita-fornecedor-select').value;
+            const tipo = document.getElementById('visita-tipo-select').value;
+            const lojaNome = state.loggedLojista;
+
+            if (!forn) return alert('Selecione o fornecedor.');
+
+            const lojaObj = state.lojas.find(l => l.nome === lojaNome);
+            const rep = getRepresentativeForFornecedor(forn, lojaObj);
+
+            if (rep && rep.whats) {
+                const msg = encodeURIComponent(`Olá ${rep.nome}, sou da loja ${lojaNome} (${lojaObj?.uf || ''}). Gostaria de ${tipo} para o fornecedor ${forn}.`);
+                window.open(`https://wa.me/55${digitsOnly(rep.whats)}?text=${msg}`, '_blank');
+            } else {
+                alert(`Solicitação gerada para ${forn} (${tipo}). Entre em contato com a equipe Comercial da Rede.`);
+            }
+        }
+
+        /* ---------------------- Visão Planilha ---------------------- */
+        function autenticarPlanilha(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-planilha-user').value;
+            const pass = document.getElementById('login-planilha-pass').value;
+
+            if (user === 'admin' && pass === 'admin123') {
+                state.authenticated.planilha = true;
+                saveState();
+                document.getElementById('planilha-auth-screen').classList.add('hidden');
+                document.getElementById('planilha-main-screen').classList.remove('hidden');
+                renderPlanilha();
+                showToast('Acesso Restrito', 'Painel de dados auditados da planilha liberado.');
+            } else {
+                alert('Credenciais incorretas.');
+            }
+        }
+
+        function renderPlanilha() {
+            const tbody = document.getElementById('tbl-planilha-body');
+            if (!tbody) return;
+
+            if (!state.atendimentos.length) {
+                tbody.innerHTML = '<tr><td colspan="11" class="p-3 text-center text-slate-500">Nenhum atendimento registrado no sistema.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = state.atendimentos.map(a => {
+                const lojaObj = state.lojas.find(l => normalizeName(l.nome) === normalizeName(a.loja));
+                const cnpjLoja = lojaObj ? lojaObj.cnpj : '-';
+                const countCheckins = state.checkins.filter(c => normalizeName(c.loja) === normalizeName(a.loja) && normalizeName(c.industria) === normalizeName(a.industria)).length;
+                const npsDisplay = a.nps ? `<span class="font-bold text-emerald-700">${a.nps}/10</span>` : '<span class="text-slate-400">-</span>';
+
+                return `
+                    <tr class="hover:bg-slate-100 transition">
+                        <td class="p-3 text-center"><input type="checkbox" class="chk-planilha" value="${a.id}"></td>
+                        <td class="p-3 font-mono text-[11px] text-slate-500">#${a.id}</td>
+                        <td class="p-3 text-slate-600">${formatDateTimePt(a.timestamp)}</td>
+                        <td class="p-3 font-bold text-slate-900">${escapeHtml(a.industria)}</td>
+                        <td class="p-3 font-bold text-slate-900">${escapeHtml(a.loja)}</td>
+                        <td class="p-3 font-mono text-[11px]">${escapeHtml(cnpjLoja)}</td>
+                        <td class="p-3 text-center font-bold text-emerald-700">${countCheckins}</td>
+                        <td class="p-3 text-slate-700"><span class="bg-slate-200 px-2 py-0.5 rounded text-[10px]">${escapeHtml(a.condicao)}</span></td>
+                        <td class="p-3 text-right font-bold text-emerald-700">${formatMoney(a.valor)}</td>
+                        <td class="p-3 text-center font-bold text-amber-600">${a.vouchersQtd}</td>
+                        <td class="p-3 text-center">${npsDisplay}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function excluirSelecionadosPlanilha() {
+            const ids = Array.from(document.querySelectorAll('.chk-planilha:checked')).map(cb => Number(cb.value));
+            if (!ids.length) return alert('Nenhum registro selecionado.');
+            if (!confirm(`Excluir os ${ids.length} registros de atendimento selecionados?`)) return;
+
+            state.atendimentos = state.atendimentos.filter(a => !ids.includes(Number(a.id)));
+            state.vouchers = state.vouchers.filter(v => !ids.includes(Number(v.atendimentoId)));
+
+            saveState();
+            persistAndRefresh();
+            showToast('Exclusão Concluída', 'Registros removidos da planilha e estatísticas recalculadas.');
+        }
+
+        function exportToExcel() {
+            if (!state.atendimentos.length) return alert('Não há dados para exportar.');
+
+            const dataToExport = state.atendimentos.map(a => {
+                const lojaObj = state.lojas.find(l => normalizeName(l.nome) === normalizeName(a.loja));
+                return {
+                    'ID Atendimento': a.id,
+                    'Data / Hora': formatDateTimePt(a.timestamp),
+                    'Indústria / Expositor': a.industria,
+                    'Loja / Comprador': a.loja,
+                    'CNPJ Loja': lojaObj ? lojaObj.cnpj : '',
+                    'UF Loja': lojaObj ? lojaObj.uf : '',
+                    'Status Pedido': a.condicao,
+                    'Valor Negociado (R$)': a.valor,
+                    'Vouchers Gerados': a.vouchersQtd,
+                    'Avaliação NPS': a.nps || 'Não avaliado',
+                    'Motivos de Não Fechamento': (a.motivos || []).join('; ')
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(dataToExport);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Atendimentos");
+            XLSX.writeFile(wb, `Relatorio_Atendimentos_ConstruUnidos_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+        /* ---------------------- Painel ADM Autenticação ---------------------- */
+        function autenticarAdmin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-admin-user').value;
+            const pass = document.getElementById('login-admin-pass').value;
+
+            if (user === 'admin' && pass === 'admin123') {
+                state.authenticated.admin = true;
+                saveState();
+                document.getElementById('admin-auth-screen').classList.add('hidden');
+                document.getElementById('admin-main-screen').classList.remove('hidden');
+                showToast('Painel ADM Liberado', 'Bem-vindo ao Controle Avançado.');
+            } else {
+                alert('Credenciais incorretas.');
+            }
+        }
+
+        function logoutAdmin() {
+            state.authenticated.admin = false;
+            saveState();
+            document.getElementById('admin-main-screen').classList.add('hidden');
+            document.getElementById('admin-auth-screen').classList.remove('hidden');
+        }
+
+        function salvarLogoEvento() {
+            const input = document.getElementById('input-event-logo');
+            if (!input || !input.files || !input.files[0]) return alert('Selecione uma imagem de logo.');
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                state.eventLogo = e.target.result;
+                saveState();
+                const img = document.getElementById('img-event-logo');
+                if (img) img.src = state.eventLogo;
+                showToast('Logo Atualizada', 'A imagem do topo foi atualizada.');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        /* ---------------------- UI Controls & Navigation ---------------------- */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('bg-[#f26522]', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-subtext');
+            });
+
+            // ITEM 5: Mantém sempre em verde os botões "Registrar Atendimento" e "Passaporte"
+            const btnVoucher = document.getElementById('tab-voucher');
+            const btnPassport = document.getElementById('tab-passport');
+
+            if (btnVoucher) {
+                btnVoucher.className = "nav-btn nav-btn-spread bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm";
+            }
+            if (btnPassport) {
+                btnPassport.className = "nav-btn nav-btn-spread bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm";
+            }
+
+            const targetView = document.getElementById(`view-${tabId}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn && tabId !== 'voucher' && tabId !== 'passport') {
+                activeBtn.classList.remove('bg-slate-800', 'text-subtext');
+                activeBtn.classList.add('bg-[#f26522]', 'text-white');
+            }
+
+            // Checagens de Autenticação para telas restritas
+            if (tabId === 'lojista' && state.authenticated.lojista) {
+                document.getElementById('lojista-auth-screen').classList.add('hidden');
+                document.getElementById('lojista-dashboard-screen').classList.remove('hidden');
+                renderLojistaPortalData();
+            }
+
+            if (tabId === 'planilha' && state.authenticated.planilha) {
+                document.getElementById('planilha-auth-screen').classList.add('hidden');
+                document.getElementById('planilha-main-screen').classList.remove('hidden');
+                renderPlanilha();
+            }
+
+            if (tabId === 'admin' && state.authenticated.admin) {
+                document.getElementById('admin-auth-screen').classList.add('hidden');
+                document.getElementById('admin-main-screen').classList.remove('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                if (icon) icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                if (icon) icon.className = 'fa-solid fa-sun';
+            }
+        }
+
+        function toggleSelectAll(className, isChecked) {
+            document.querySelectorAll(`.${className}`).forEach(cb => cb.checked = isChecked);
+        }
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast-notification');
+            const tTitle = document.getElementById('toast-title');
+            const tMsg = document.getElementById('toast-msg');
+
+            if (tTitle) tTitle.innerText = title;
+            if (tMsg) tMsg.innerText = msg;
+
+            if (toast) {
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
